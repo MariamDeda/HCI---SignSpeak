@@ -1,0 +1,11 @@
+# Python 3.11 recommended
+numpy<2
+mediapipe==0.10.14        # also installs opencv-contrib-python (provides cv2)
+tensorflow==2.16.1        # or tensorflow-cpu==2.16.1
+scikit-learn
+matplotlib
+streamlit>=1.44
+# Optional (speech): the app still runs without them
+sounddevice
+vosk
+pyttsx3

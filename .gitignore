@@ -1,0 +1,8 @@
+@"
+.venv/
+__pycache__/
+*.pyc
+logs/
+results/
+models/vosk-model-small-en-us-0.15/
+"@ | Set-Content .gitignore
