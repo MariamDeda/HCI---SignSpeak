@@ -9,7 +9,7 @@ ROOT = Path(__file__).parent
 # random movement, anything that is not one of the signs.
 SIGNS = ["hello", "goodbye", "thank_you", "i_love_you", "yes", "no", "unknown"]
 UNKNOWN = "unknown"
-DISPLAY = {"thank_you": "thank you", "i_love_you": "I love you", "yes": "yes", "no": "no"}
+DISPLAY = {"thank_you": "thank you", "i_love_you": "I love you"}
 
 # ---- Sequence / features
 SEQ_LEN = 30            # frames per window (about 1 s at 30 FPS)
@@ -39,3 +39,8 @@ LOG_DIR = ROOT / "logs"
 # ---- Speech (optional)
 VOSK_MODEL_DIR = MODEL_DIR / "vosk-model-small-en-us-0.15"
 LISTEN_SECONDS = 5
+
+# ---- Voice output (the "Speak aloud" switch on the signer page)
+# "browser": the browser speaks (works on your laptop AND when the app is deployed).
+# "server" : the computer running the app speaks through pyttsx3 (only for local use).
+SPEAK_VIA = "browser"

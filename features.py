@@ -49,9 +49,19 @@ def draw_landmarks(frame_bgr, results):
 
 
 def open_camera():
-    cap = cv2.VideoCapture(config.CAMERA_INDEX)
+    """Open the webcam. On Windows try DirectShow first (starts much faster), then the default backend."""
+    import os
+    cap = None
+    if os.name == "nt":
+        cap = cv2.VideoCapture(config.CAMERA_INDEX, cv2.CAP_DSHOW)
+        if not cap.isOpened():
+            cap.release()
+            cap = None
+    if cap is None:
+        cap = cv2.VideoCapture(config.CAMERA_INDEX)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, config.FRAME_W)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, config.FRAME_H)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
     return cap
 
 

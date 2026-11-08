@@ -40,3 +40,14 @@ and unzip it into `models/`.
 - Streamlit reruns the script on every widget click, which restarts the camera loop;
   this is normal for the prototype.
 - Targets (92% accuracy, <500 ms) come from the proposal; report what you measure.
+
+## The app (two roles)
+`python -m streamlit run app.py` opens a home page: **"I use sign language"** or **"I don't know sign language"**.
+- **Signer page** (`view_signer.py`): turn the camera on and sign; recognised signs appear in big text
+  (size switch: Large / Larger / Huge) and can be spoken aloud (browser voice).
+- **Hearing page** (`view_hearing.py`): type, tap a word, or use the microphone; the message is mapped to
+  signs (`signs_ref.py`) and shown big, slow and on repeat. If `data/<sign>/*.npy` recordings exist, the
+  sign is animated from them; otherwise a large picture and a written "how to sign it" are shown.
+- Add signs by editing `config.SIGNS`; add spoken synonyms and a description in `signs_ref.SIGN_INFO`.
+- Colours and fonts: the `:root{...}` block at the top of `theme.py`.
+- Voice input (microphone on the hearing page) needs `vosk` and the Vosk model in `models/`.
