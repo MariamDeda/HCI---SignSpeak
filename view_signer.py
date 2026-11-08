@@ -195,7 +195,7 @@ def render():
 
     pill = ('<span class="pill live"><span class="dot"></span>Camera on</span>' if running
             else '<span class="pill off"><span class="dot"></span>Camera off</span>')
-    nav.topbar("I use sign language", "Turn on the camera and sign. Your words appear in big letters.", pill)
+    nav.topbar("I use sign language", "Turn on the camera and sign. Your words appear on the screen once recognized.", pill)
 
     with st.container(key="card_toolbar"):
         c1, c2, c3, c4, c5 = st.columns([2, 2, 2.6, 1.1, 1.3], vertical_alignment="center")

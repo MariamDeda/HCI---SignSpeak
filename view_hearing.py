@@ -94,7 +94,7 @@ def render():
     ss.setdefault("h_nonce", 0)
     ss.setdefault("h_history", [])
 
-    nav.topbar("I don't know sign language",
+    nav.topbar("Signer",
                "Say or type your message. The signer will see it as signs, big and clear.")
 
     left, right = st.columns([5, 7], gap="large")
@@ -112,7 +112,7 @@ def render():
                 process_text(typed, "typed")
 
             if st.toggle("🎤 Use the microphone", key="h_mic",
-                         help="Turn this on, tap the big button and speak."):
+                         help="Turn this on, tap the button and speak."):
                 theme.embed(voice.mic_html(), height=170)
                 with st.expander("Voice not working? Try offline recording"):
                     _offline_recording()

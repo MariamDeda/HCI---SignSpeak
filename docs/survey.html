@@ -90,7 +90,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
   var CFG = window.SIGNSPEAK || {};
   var Q = [
     {k:"role", tag:"About you", c:"var(--sky)", t:"Which side of SignSpeak did you try?", o:[
-      ["🤟","I use sign language (camera side)"],["💬","I don't know sign language (type / speak side)"],["🔄","Both sides"]]},
+      ["🤟","Signer"],["💬","Speaker"],["🔄","Both"]]},
     {k:"device", tag:"About you", c:"var(--sky)", t:"What device are you using?", o:[
       ["💻","Laptop or desktop"],["📱","Phone"],["📟","Tablet"]]},
     {k:"familiarity", tag:"About you", c:"var(--sky)", t:"How familiar are you with sign language?", o:[
@@ -110,7 +110,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
       "Clearer instructions","Bigger text and buttons","Better colours","More signs","Faster response","Easier navigation","Better voice input","More helpful messages","Camera setup","Nothing, I like it as it is"]}
   ];
   var FACES = [["😖","var(--coral)"],["🙁","#FF9F5A"],["😐","var(--sun)"],["🙂","#7BCF8E"],["🤩","var(--mint)"]];
-  var CHEERS = {3:"Great start! 🎈",6:"A third done. Nice! 🌟",9:"Over halfway there! 🚀",12:"Almost done, just a few more! 🔥",14:"Last one, we promise! 🎯"};
+  // var CHEERS = {3:"Great start! 🎈",6:"A third done. Nice! 🌟",9:"Over halfway there! 🚀",12:"Almost done, just a few more! 🔥",14:"Last one, we promise! 🎯"};
   var N = Q.length, i = 0, A = {}, sendTimer = null, t0 = Date.now(), back = false;
   var $ = function(id){ return document.getElementById(id); };
   var stage = $("stage");
@@ -169,10 +169,10 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
         ch.appendChild(b);
       });
       card.appendChild(ch);
-      card.appendChild(el("p", {"class":"hint", text:"Tap as many as you like."}));
+      card.appendChild(el("p", {"class":"hint", text:"Tap as many as you think are needed."}));
       var more = el("div", {"class":"more"});
       more.appendChild(el("label", {"for":"comment", text:"Anything else you'd like to tell us? (optional)"}));
-      var ta = el("textarea", {id:"comment", maxlength:"600", placeholder:"Your idea, a problem you hit, or something you loved…"});
+      // var ta = el("textarea", {id:"comment", maxlength:"600", placeholder:"Your idea, a problem you hit, or something you loved…"});
       ta.value = A.comment || "";
       ta.addEventListener("input", function(){ A.comment = ta.value; persist(); });
       more.appendChild(ta); card.appendChild(more);
@@ -193,7 +193,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
     bk.addEventListener("click", function(){ go(i - 1); });
     nav.appendChild(bk);
     if (q.multi){
-      var sb = el("button", {type:"button", "class":"go", id:"send", text:"Send my answers 🎉"});
+      var sb = el("button", {type:"button", "class":"go", id:"send", text:"Send my answers →"});
       sb.addEventListener("click", submit);
       nav.appendChild(sb);
     } else {
@@ -266,8 +266,8 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
       card.appendChild(box); stage.replaceChildren(card); return;
     }
     box.appendChild(el("div", {"class":"big", text:"🎉"}));
-    box.appendChild(el("h1", {text:"Thank you so much!"}));
-    box.appendChild(el("p", {text:"Your answers will help us make SignSpeak clearer and easier for everyone. You can close this tab now."}));
+    box.appendChild(el("h1", {text:"Thank you for testing SignSpeak for us."}));
+    box.appendChild(el("p", {text:"You may close this tab and resume your own stuff now."}));
     if (status === "demo") box.appendChild(el("div", {"class":"demo", text:"Test mode: no Google Sheet is connected yet, so these answers were only kept in this browser. (Set SHEET_URL in docs/config.js.)"}));
     var a = el("a", {"class":"btn2", href: CFG.APP_URL || "#", text:"Back to SignSpeak"});
     box.appendChild(a);
