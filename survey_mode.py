@@ -57,6 +57,12 @@ _JS = r"""<!doctype html><html><body><script>
           ready = true;
           box.innerHTML = '<a target="_blank" rel="noopener"></a>';
           box.firstChild.textContent = "✅ I'm done exploring · take the survey →";
+          box.firstChild.addEventListener('click', function(ev){
+            ev.preventDefault();
+            var u = box.firstChild.href, w = null;
+            try { w = window.open(u, '_blank'); } catch(e){}
+            if (!w){ window.location.href = u; }   // popups/top navigation blocked by the host frame: open in this frame
+          });
         }
         box.firstChild.href = href;
       }
