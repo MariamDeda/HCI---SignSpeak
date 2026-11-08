@@ -11,11 +11,12 @@ alternative (Vosk) is available in view_hearing.py under "Offline recording".
 _MIC = r"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 :root{--ink:#1B2A38;--muted:#52667A;--line:#CFE0EA;--brand:#0B7F96;--brand-d:#08687B;--sun:#FFE27A;--err:#FBCFC8;--err-ink:#9A2F20}
 *{box-sizing:border-box}
-html,body{margin:0;background:transparent;color:var(--ink);font-family:"Nunito","Segoe UI Variable","Segoe UI",system-ui,sans-serif}
+html,body{margin:0;background:transparent;color:var(--ink);font-family:"IBM Plex Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif}
 .box{display:flex;flex-direction:column;gap:12px;align-items:stretch;padding:2px}
-button{font:inherit;font-weight:900;font-size:1.15rem;border:0;border-radius:18px;padding:16px 20px;cursor:pointer;
+button{font:inherit;font-weight:700;font-size:1.15rem;border:0;border-radius:18px;padding:16px 20px;cursor:pointer;
   color:#fff;background:var(--brand);box-shadow:0 6px 16px rgba(11,127,150,.30);transition:transform .15s,background .15s}
 button:hover{transform:translateY(-1px);background:var(--brand-d)}
 button:focus-visible{outline:3px solid #8CD3E4;outline-offset:2px}

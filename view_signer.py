@@ -23,8 +23,8 @@ ss = st.session_state
 
 # text size choice -> (current word size, sentence size)
 SIZES = {
-    "Large":  ("clamp(2.6rem, 5.5vw, 4.5rem)", "clamp(1.3rem, 2.6vw, 1.9rem)"),
-    "Larger": ("clamp(3.2rem, 7vw, 6rem)",     "clamp(1.5rem, 3.2vw, 2.4rem)"),
+    "Large":  ("clamp(2.2rem, 4.8vw, 3.8rem)", "clamp(1.15rem, 2.3vw, 1.6rem)"),
+    "Larger": ("clamp(2.8rem, 6vw, 5rem)",     "clamp(1.3rem, 2.8vw, 2rem)"),
     "Huge":   ("clamp(4rem, 10vw, 9rem)",      "clamp(2rem, 4.8vw, 3.6rem)"),
 }
 
@@ -195,7 +195,7 @@ def render():
 
     pill = ('<span class="pill live"><span class="dot"></span>Camera on</span>' if running
             else '<span class="pill off"><span class="dot"></span>Camera off</span>')
-    nav.topbar("I use sign language", "Turn on the camera and sign. Your words appear on the screen once recognized.", pill)
+    nav.topbar("Signer", "Turn on the camera and sign. Your words appear on the screen once recognized.", pill)
 
     with st.container(key="card_toolbar"):
         c1, c2, c3, c4, c5 = st.columns([2, 2, 2.6, 1.1, 1.3], vertical_alignment="center")

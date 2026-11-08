@@ -6,42 +6,42 @@
 <title>SignSpeak · Help us test it</title>
 <meta name="description" content="Try SignSpeak for a minute, then answer a few quick clicks. No typing needed.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1B2A38;--muted:#4C6277;--line:#CFE0EA;--brand:#0B7F96;--brand-d:#08687B;--sky:#46B1E8;--mint:#35C590;--sun:#F5B800;--coral:#FF7A6B;--bg:#E4F2FA}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;color:var(--ink);font-family:Nunito,"Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.5;
+body{margin:0;color:var(--ink);font-family:"IBM Plex Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.5;
   background:radial-gradient(900px 500px at 8% -5%,rgba(70,177,232,.45),transparent 60%),radial-gradient(800px 500px at 100% 10%,rgba(53,197,144,.35),transparent 60%),radial-gradient(700px 500px at 50% 105%,rgba(245,184,0,.28),transparent 60%),var(--bg);
   min-height:100vh}
 body:before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(11,127,150,.14) 1.3px,transparent 1.4px);background-size:26px 26px;pointer-events:none;z-index:0}
-.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:28px 20px 70px}
-.logo{font-weight:900;font-size:1.5rem;letter-spacing:-.02em}.logo span{color:var(--brand)}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:22px 20px 56px}
+.logo{font-weight:700;font-size:1.5rem;letter-spacing:-.02em}.logo span{color:var(--brand)}
 .hero{text-align:center;padding:34px 0 12px}
-.hero .hand{font-size:4rem;display:inline-block;animation:wave 2.4s ease-in-out infinite;transform-origin:70% 80%}
+.hero .hand{font-size:3rem;display:inline-block;animation:wave 2.4s ease-in-out infinite;transform-origin:70% 80%}
 @keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}50%{transform:rotate(8deg)}}
-h1{font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.08;margin:.2rem 0 .6rem;letter-spacing:-.03em;font-weight:900}
+h1{font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.08;margin:.2rem 0 .6rem;letter-spacing:-.03em;font-weight:700}
 h1 em{font-style:normal;background:linear-gradient(120deg,var(--brand),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{font-size:1.2rem;color:var(--muted);max-width:640px;margin:0 auto 1.2rem;font-weight:700}
+.lead{font-size:1.05rem;color:var(--muted);max-width:640px;margin:0 auto 1.2rem;font-weight:700}
 .badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 1.6rem}
-.badge{background:#fff;border:2px solid var(--line);border-radius:999px;padding:7px 15px;font-weight:800;font-size:.95rem;box-shadow:0 3px 0 var(--line)}
-.btn{display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;text-decoration:none;color:#fff;font:inherit;font-weight:900;font-size:1.35rem;padding:18px 38px;border-radius:999px;
+.badge{background:#fff;border:2px solid var(--line);border-radius:999px;padding:7px 15px;font-weight:600;font-size:.95rem;box-shadow:0 3px 0 var(--line)}
+.btn{display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;text-decoration:none;color:#fff;font:inherit;font-weight:700;font-size:1.1rem;padding:14px 32px;border-radius:999px;
   background:linear-gradient(135deg,var(--mint),var(--brand));box-shadow:0 12px 30px rgba(11,127,150,.38);transition:transform .15s,box-shadow .15s}
 .btn:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(11,127,150,.45)}
 .btn:focus-visible{outline:4px solid var(--sun);outline-offset:4px}
 .btn .arr{transition:transform .15s}.btn:hover .arr{transform:translateX(5px)}
 .cta{text-align:center}.cta small{display:block;margin-top:12px;color:var(--muted);font-weight:700}
-h2{font-size:1.7rem;margin:2.8rem 0 1rem;text-align:center;letter-spacing:-.02em;font-weight:900}
+h2{font-size:1.4rem;margin:2.2rem 0 .9rem;text-align:center;letter-spacing:-.02em;font-weight:700}
 .grid{display:grid;gap:18px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
-.card{background:#fff;border-radius:26px;padding:24px;border:2px solid #fff;box-shadow:0 10px 30px rgba(27,42,56,.10);position:relative;overflow:hidden}
+.card{background:#fff;border-radius:20px;padding:20px;border:2px solid #fff;box-shadow:0 10px 30px rgba(27,42,56,.10);position:relative;overflow:hidden}
 .card:before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:var(--a,var(--sky))}
-.card h3{margin:.5rem 0 .3rem;font-size:1.3rem;font-weight:900}.card p{margin:0;color:var(--muted);font-weight:700}
-.ic{width:62px;height:62px;border-radius:20px;display:grid;place-items:center;font-size:2rem;background:color-mix(in srgb,var(--a,var(--sky)) 22%,#fff)}
+.card h3{margin:.4rem 0 .25rem;font-size:1.12rem;font-weight:700}.card p{margin:0;color:var(--muted);font-weight:700}
+.ic{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-size:1.6rem;background:color-mix(in srgb,var(--a,var(--sky)) 22%,#fff)}
 .step{--a:var(--sky)}.step:nth-child(2){--a:var(--sun)}.step:nth-child(3){--a:var(--mint)}
-.num{position:absolute;right:18px;top:20px;font-size:2.6rem;font-weight:900;color:color-mix(in srgb,var(--a) 45%,#fff)}
+.num{position:absolute;right:16px;top:16px;font-size:2rem;font-weight:700;color:color-mix(in srgb,var(--a) 45%,#fff)}
 .role.s{--a:var(--sky)}.role.h{--a:var(--mint)}
 .note{display:flex;gap:16px;align-items:flex-start;background:#FFF7D6;border:2px solid #F0D568;border-radius:22px;padding:18px 22px;margin-top:18px;font-weight:700}
-.note .e{font-size:1.8rem;line-height:1}.note b{font-weight:900}
+.note .e{font-size:1.8rem;line-height:1}.note b{font-weight:700}
 .note.blue{background:#DDF1FB;border-color:#9ED3EE}
 .foot{text-align:center;color:var(--muted);font-weight:700;margin-top:3rem;font-size:.95rem}
 @media (max-width:760px){.g2,.g3{grid-template-columns:1fr}.btn{font-size:1.2rem;padding:16px 28px}}
@@ -55,44 +55,57 @@ h2{font-size:1.7rem;margin:2.8rem 0 1rem;text-align:center;letter-spacing:-.02em
   <section class="hero">
     <div class="hand" aria-hidden="true">🤟</div>
     <h1>Help us make <em>SignSpeak</em> better</h1>
-    <!-- <p class="lead">Try a small app for about a minute, then tell us what you think with a few quick taps. No typing needed.</p>
+    <p class="lead">Try a small app for about a minute, then tell us what you think with a few quick taps. No typing needed.</p>
     <div class="badges">
       <span class="badge">⏱ About 4 minutes</span>
       <span class="badge">🖱 Just clicking</span>
       <span class="badge">🔒 Anonymous</span>
-    </div> -->
+    </div>
     <div class="cta">
       <a id="start" class="btn" href="#">Start <span class="arr">→</span></a>
-      <!-- <small>Opens the app in this tab. A survey button appears there after 1 minute.</small> -->
+      <small>Opens the app in this tab. A survey button appears there after 1 minute.</small>
     </div>
   </section>
 
-  <h2>What is SignSpeak?</h2>
-  <p class="lead" style="margin-top:-.4rem">A prototype that helps people who use sign language (ASL) and people who don't understand each other, in real time. It turns signs into text and voice, and typed or spoken words into signs.</p>
+  <h2>So, what is SignSpeak?</h2>
+  <p class="lead" style="margin-top:-.4rem">A prototype that helps people who use sign language (ASL) and people who don't understand each other, in real time. It turns signs into big text and voice, and typed or spoken words into signs.</p>
+  <div class="grid g2">
+    <div class="card role s">
+      <div class="ic">🤟</div>
+      <h3>Signer</h3>
+      <p>You use sign language. Switch on the camera and sign. Your words show up in big text and can be spoken aloud for others.</p>
+    </div>
+    <div class="card role h">
+      <div class="ic">💬</div>
+      <h3>Speaker</h3>
+      <p>You don't sign. Type, speak or tap a word. The app shows it as a big, slow sign that a signer can follow.</p>
+    </div>
   </div>
 
-  <h2>How the survey works</h2>
+  <h2>How this works</h2>
   <div class="grid g3">
-    <div class="card step"><span class="num">1</span><div class="ic">🧭</div><h3>Explore the app</h3></div>
-    <div class="card step"><span class="num">2</span><div class="ic">👆</div><h3>Tap "Take the Survey"</h3></div>
-    <div class="card step"><span class="num">3</span><div class="ic">🎉</div><h3>Answer a few questions</h3></div>
+    <div class="card step"><span class="num">1</span><div class="ic">🧭</div><h3>Explore</h3><p>Use the app freely for about a minute. Try either role (Signer or Speaker), or both.</p></div>
+    <div class="card step"><span class="num">2</span><div class="ic">👆</div><h3>Take the Survey</h3><p>A <b>Take the Survey</b> button appears at the bottom of the app when the minute is up. It opens the survey in a new tab.</p></div>
+    <div class="card step"><span class="num">3</span><div class="ic">🎉</div><h3>Answer 15 taps</h3><p>One question per screen. Tap an answer and it moves on by itself.</p></div>
   </div>
 
-  <div class="note"><span class="e">💻</span><div><b>We would highly recommend using the app on a laptop or desktop.</b></div></div>
+  <div class="note"><span class="e">💻</span><div><b>Best on a laptop or desktop.</b> SignSpeak is designed for a bigger screen. Chrome or Edge works best, especially if you want to try the microphone (allow it if your browser asks).</div></div>
+  <div class="note blue"><span class="e">📷</span><div><b>About the camera.</b> The live camera part may say "Camera not available" in this online version. That is expected. Open <b>Settings</b> on that page and try the <b>Demo</b> buttons to see how it responds. The other role (typing, speaking, tapping words) works fully.</div></div>
 
   <div class="cta" style="margin-top:2.4rem">
     <a id="start2" class="btn" href="#">Start <span class="arr">→</span></a>
   </div>
+  <p class="foot">Thank you for helping! There are no right or wrong answers. We are testing the app, not you. 💙</p>
 </main>
 <script src="config.js"></script>
 <script>
 (function(){
   var base = (window.SIGNSPEAK && window.SIGNSPEAK.APP_URL) || "";
-  var url = base + (base.indexOf("?") < 0 ? "?" : "&") + "survey=1";
+  function build(){ return base + (base.indexOf("?") < 0 ? "?" : "&") + "survey=1&sv=" + Date.now(); }
   ["start","start2"].forEach(function(id){
     var a = document.getElementById(id);
-    a.href = url;
-    a.addEventListener("click", function(){ try { sessionStorage.setItem("ss_started", String(Date.now())); } catch(e){} });
+    a.href = build();
+    ["mousedown","touchstart","keydown","click"].forEach(function(ev){ a.addEventListener(ev, function(){ a.href = build(); }); });
   });
 })();
 </script>

@@ -22,12 +22,16 @@ _JS = r"""<!doctype html><html><body><script>
   function main(cfg){
     if (window.__ssSurvey) return; window.__ssSurvey = 1;
     var store; try { store = window.sessionStorage; store.setItem('_t','1'); } catch(e){ store = {_d:{}, getItem:function(k){return this._d[k]||null}, setItem:function(k,v){this._d[k]=String(v)}}; }
+    // each press of "Start" on the intro page brings a fresh ?sv=<time> id, so every visit counts its own minute
+    var sv = new URLSearchParams(location.search).get('sv') || '';
     var start = +store.getItem('ss_start') || 0;
+    if (sv && store.getItem('ss_sv') !== sv){ store.setItem('ss_sv', sv); store.setItem('ss_roles', ''); start = 0; }
+    if (start && Date.now() - start > 3 * 3600 * 1000) start = 0;   // stale value from an old visit
     if (!start){ start = Date.now(); store.setItem('ss_start', start); }
     var css = document.createElement('style');
-    css.textContent = '#ss-sv{position:fixed;right:22px;bottom:22px;z-index:2147483000;font-family:Nunito,"Segoe UI",system-ui,sans-serif;max-width:calc(100vw - 32px)}'
-      + '#ss-sv a,#ss-sv .w{display:flex;align-items:center;gap:10px;border-radius:999px;font-weight:900;font-size:1rem;text-decoration:none;padding:13px 20px;box-shadow:0 10px 28px rgba(27,42,56,.28)}'
-      + '#ss-sv .w{background:#fff;color:#1B2A38;border:2px solid #CFE0EA;font-weight:800}'
+    css.textContent = '#ss-sv{position:fixed;right:22px;bottom:22px;z-index:2147483000;font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;max-width:calc(100vw - 32px)}'
+      + '#ss-sv a,#ss-sv .w{display:flex;align-items:center;gap:10px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;padding:13px 20px;box-shadow:0 10px 28px rgba(27,42,56,.28)}'
+      + '#ss-sv .w{background:#fff;color:#1B2A38;border:2px solid #CFE0EA;font-weight:600}'
       + '#ss-sv .w b{color:#0B7F96;font-variant-numeric:tabular-nums}'
       + '#ss-sv a{background:linear-gradient(135deg,#35C590,#0B7F96);color:#fff;font-size:1.08rem;padding:15px 24px;animation:ssPop .5s cubic-bezier(.2,1.4,.4,1),ssRing 1.8s 0.5s infinite}'
       + '#ss-sv a:hover{filter:brightness(1.08);transform:translateY(-1px)}'
@@ -56,7 +60,7 @@ _JS = r"""<!doctype html><html><body><script>
         if (!ready){
           ready = true;
           box.innerHTML = '<a target="_blank" rel="noopener"></a>';
-          box.firstChild.textContent = "✅ I'm done exploring · take the survey →";
+          box.firstChild.textContent = "Take the Survey →";
           box.firstChild.addEventListener('click', function(ev){
             ev.preventDefault();
             var u = box.firstChild.href, w = null;

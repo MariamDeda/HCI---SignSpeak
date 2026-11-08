@@ -18,8 +18,8 @@ def render():
             st.markdown(
                 '<div class="role-ic sky">🤟</div>'
                 '<div class="role-t">Signer</div>'
-                '<div class="role-d">You want people to understand your ASL.</div>'
-            )
+                '<div class="role-d">You want people to understand your ASL.</div>',
+                unsafe_allow_html=True)
             st.button("Start signing  →", key="go_signer", type="primary",
                       on_click=nav.go, args=("signer",))
     with right:
@@ -27,8 +27,8 @@ def render():
             st.markdown(
                 '<div class="role-ic mint">💬</div>'
                 '<div class="role-t">Speaker</div>'
-                '<div class="role-d">You want to talk with someone who signs.</div>'
-            )
+                '<div class="role-d">You want to talk with someone who signs.</div>',
+                unsafe_allow_html=True)
             st.button("Start talking  →", key="go_hearing", type="primary",
                       on_click=nav.go, args=("hearing",))
 

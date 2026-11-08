@@ -94,7 +94,7 @@ def render():
     ss.setdefault("h_nonce", 0)
     ss.setdefault("h_history", [])
 
-    nav.topbar("Signer",
+    nav.topbar("Speaker",
                "Say or type your message. The signer will see it as signs, big and clear.")
 
     left, right = st.columns([5, 7], gap="large")

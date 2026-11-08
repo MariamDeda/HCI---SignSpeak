@@ -5,69 +5,69 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SignSpeak · Quick survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1B2A38;--muted:#4C6277;--line:#CFE0EA;--brand:#0B7F96;--brand-d:#08687B;--sky:#46B1E8;--mint:#35C590;--sun:#F5B800;--coral:#FF7A6B;--bg:#E4F2FA;--acc:var(--sky)}
 *{box-sizing:border-box}
-body{margin:0;color:var(--ink);font-family:Nunito,"Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.45;min-height:100vh;
+body{margin:0;color:var(--ink);font-family:"IBM Plex Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.45;min-height:100vh;
   background:radial-gradient(900px 500px at 8% -5%,rgba(70,177,232,.45),transparent 60%),radial-gradient(800px 500px at 100% 10%,rgba(53,197,144,.35),transparent 60%),radial-gradient(700px 500px at 50% 105%,rgba(245,184,0,.28),transparent 60%),var(--bg)}
 body:before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(11,127,150,.14) 1.3px,transparent 1.4px);background-size:26px 26px;pointer-events:none}
-.wrap{position:relative;max-width:820px;margin:0 auto;padding:22px 18px 60px}
+.wrap{position:relative;max-width:720px;margin:0 auto;padding:18px 16px 50px}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.logo{font-weight:900;font-size:1.35rem;letter-spacing:-.02em}.logo span{color:var(--brand)}
-.count{font-weight:900;color:var(--brand);background:#fff;border:2px solid var(--line);border-radius:999px;padding:5px 14px;font-size:.95rem}
+.logo{font-weight:700;font-size:1.35rem;letter-spacing:-.02em}.logo span{color:var(--brand)}
+.count{font-weight:700;color:var(--brand);background:#fff;border:2px solid var(--line);border-radius:999px;padding:5px 14px;font-size:.95rem}
 .bar{height:16px;border-radius:999px;background:#fff;border:2px solid var(--line);overflow:hidden;margin-bottom:6px}
 .bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--sky),var(--mint),var(--sun));transition:width .45s cubic-bezier(.3,1.2,.5,1)}
-.cheer{min-height:1.6em;text-align:center;font-weight:800;color:var(--muted);margin:2px 0 12px}
-.card{background:#fff;border-radius:30px;padding:30px 28px 26px;box-shadow:0 14px 38px rgba(27,42,56,.13);position:relative;overflow:hidden;animation:in .38s cubic-bezier(.2,1,.4,1)}
+.cheer{min-height:1.6em;text-align:center;font-weight:600;color:var(--muted);margin:2px 0 12px}
+.card{background:#fff;border-radius:24px;padding:24px 24px 20px;box-shadow:0 14px 38px rgba(27,42,56,.13);position:relative;overflow:hidden;animation:in .38s cubic-bezier(.2,1,.4,1)}
 .card.back{animation-name:inb}
 @keyframes in{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
 @keyframes inb{from{opacity:0;transform:translateX(-34px)}to{opacity:1;transform:none}}
 .card:before{content:"";position:absolute;left:0;right:0;top:0;height:9px;background:var(--acc)}
-.tag{display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:#0e3f4a;background:color-mix(in srgb,var(--acc) 28%,#fff);border-radius:999px;padding:6px 14px}
-h1{font-size:clamp(1.5rem,4.2vw,2.1rem);line-height:1.2;margin:.8rem 0 1.4rem;letter-spacing:-.02em;font-weight:900;outline:none}
+.tag{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:#0e3f4a;background:color-mix(in srgb,var(--acc) 28%,#fff);border-radius:999px;padding:6px 14px}
+h1{font-size:clamp(1.3rem,3.6vw,1.7rem);line-height:1.2;margin:.8rem 0 1.4rem;letter-spacing:-.02em;font-weight:700;outline:none}
 .opts{display:grid;gap:12px}
-.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;font:inherit;font-weight:800;font-size:1.15rem;color:var(--ink);cursor:pointer;
-  background:#F4FAFD;border:2.5px solid var(--line);border-radius:20px;padding:15px 18px;transition:transform .12s,border-color .12s,background .12s,box-shadow .12s}
-.opt .e{font-size:1.9rem;line-height:1;width:2.2rem;text-align:center}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;font:inherit;font-weight:600;font-size:1.02rem;color:var(--ink);cursor:pointer;
+  background:#F4FAFD;border:2px solid var(--line);border-radius:16px;padding:12px 16px;transition:transform .12s,border-color .12s,background .12s,box-shadow .12s}
+.opt .e{font-size:1.5rem;line-height:1;width:2.2rem;text-align:center}
 .opt:hover{transform:translateY(-2px);border-color:var(--acc);background:#fff;box-shadow:0 8px 18px rgba(27,42,56,.10)}
 .opt:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
 .opt[aria-checked=true]{border-color:var(--brand);background:color-mix(in srgb,var(--mint) 22%,#fff);box-shadow:0 0 0 4px rgba(53,197,144,.30);transform:scale(1.015)}
-.opt .k{margin-left:auto;font-size:.85rem;font-weight:900;color:var(--muted);background:#fff;border:2px solid var(--line);border-radius:8px;padding:0 8px}
+.opt .k{margin-left:auto;font-size:.85rem;font-weight:700;color:var(--muted);background:#fff;border:2px solid var(--line);border-radius:8px;padding:0 8px}
 .scale{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.face{display:flex;flex-direction:column;align-items:center;gap:4px;font:inherit;cursor:pointer;color:var(--ink);padding:16px 4px 12px;border-radius:22px;border:2.5px solid var(--line);background:#F4FAFD;transition:transform .14s,border-color .14s,background .14s,box-shadow .14s}
-.face .e{font-size:clamp(2rem,7vw,2.9rem);line-height:1;transition:transform .2s}
-.face .n{font-weight:900;font-size:1.05rem;color:var(--muted)}
+.face{display:flex;flex-direction:column;align-items:center;gap:4px;font:inherit;cursor:pointer;color:var(--ink);padding:12px 4px 9px;border-radius:18px;border:2.5px solid var(--line);background:#F4FAFD;transition:transform .14s,border-color .14s,background .14s,box-shadow .14s}
+.face .e{font-size:clamp(1.7rem,6vw,2.3rem);line-height:1;transition:transform .2s}
+.face .n{font-weight:700;font-size:1.05rem;color:var(--muted)}
 .face:hover{transform:translateY(-4px);border-color:var(--c);background:#fff;box-shadow:0 10px 20px rgba(27,42,56,.12)}
 .face:hover .e{transform:scale(1.18) rotate(-4deg)}
 .face:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
 .face[aria-checked=true]{border-color:var(--c);background:color-mix(in srgb,var(--c) 22%,#fff);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 38%,transparent)}
 .face[aria-checked=true] .e{transform:scale(1.22)}
 .face[aria-checked=true] .n{color:var(--ink)}
-.ends{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-weight:800;color:var(--muted);font-size:.95rem}
+.ends{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-weight:600;color:var(--muted);font-size:.95rem}
 .ends span:last-child{text-align:right}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{font:inherit;font-weight:800;font-size:1.02rem;cursor:pointer;border:2.5px solid var(--line);background:#F4FAFD;color:var(--ink);border-radius:999px;padding:10px 16px;transition:transform .12s,background .12s,border-color .12s}
+.chip{font:inherit;font-weight:600;font-size:1.02rem;cursor:pointer;border:2.5px solid var(--line);background:#F4FAFD;color:var(--ink);border-radius:999px;padding:10px 16px;transition:transform .12s,background .12s,border-color .12s}
 .chip:hover{transform:translateY(-2px);border-color:var(--acc);background:#fff}
 .chip:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
 .chip[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
-.more{margin-top:20px}.more label{display:block;font-weight:900;margin-bottom:8px}
+.more{margin-top:20px}.more label{display:block;font-weight:700;margin-bottom:8px}
 textarea{width:100%;min-height:90px;resize:vertical;font:inherit;font-weight:700;color:var(--ink);border:2.5px solid var(--line);border-radius:18px;padding:12px 14px;background:#F4FAFD}
 textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);background:#fff}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px}
-.ghost{font:inherit;font-weight:900;cursor:pointer;background:transparent;border:0;color:var(--brand);padding:10px 6px;border-radius:12px}
+.ghost{font:inherit;font-weight:700;cursor:pointer;background:transparent;border:0;color:var(--brand);padding:10px 6px;border-radius:12px}
 .ghost:hover{text-decoration:underline}.ghost[disabled]{visibility:hidden}
 .ghost:focus-visible,.go:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
 .hint{color:var(--muted);font-weight:700;font-size:.92rem}
-.go{font:inherit;font-weight:900;font-size:1.2rem;cursor:pointer;border:0;color:#fff;border-radius:999px;padding:15px 30px;background:linear-gradient(135deg,var(--mint),var(--brand));box-shadow:0 10px 24px rgba(11,127,150,.35);transition:transform .14s}
+.go{font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;border:0;color:#fff;border-radius:999px;padding:12px 26px;background:linear-gradient(135deg,var(--mint),var(--brand));box-shadow:0 10px 24px rgba(11,127,150,.35);transition:transform .14s}
 .go:hover{transform:translateY(-2px)}.go[disabled]{opacity:.6;cursor:wait}
 .thanks{text-align:center;padding:14px 4px 4px}
 .thanks .big{font-size:5rem;animation:pop .7s cubic-bezier(.2,1.6,.4,1)}
 @keyframes pop{from{transform:scale(.2) rotate(-30deg);opacity:0}to{transform:none;opacity:1}}
 .thanks h1{margin:.4rem 0 .6rem}.thanks p{color:var(--muted);font-weight:700;font-size:1.1rem;margin:.3rem auto 1.2rem;max-width:520px}
-.demo,.err{margin:14px auto;max-width:560px;border-radius:16px;padding:12px 16px;font-weight:800;text-align:left}
+.demo,.err{margin:14px auto;max-width:560px;border-radius:16px;padding:12px 16px;font-weight:600;text-align:left}
 .demo{background:#FFF1C2;border:2px solid #F0D568}.err{background:#FDE3DE;border:2px solid #F3A89B;color:#8F2A1B}
-.btn2{display:inline-block;text-decoration:none;font:inherit;font-weight:900;color:var(--brand);background:#fff;border:2.5px solid var(--brand);border-radius:999px;padding:12px 24px;margin:4px}
+.btn2{display:inline-block;text-decoration:none;font:inherit;font-weight:700;color:var(--brand);background:#fff;border:2.5px solid var(--brand);border-radius:999px;padding:12px 24px;margin:4px}
 .btn2:hover{background:var(--brand);color:#fff}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:10}
 @media (max-width:560px){.card{padding:24px 16px 20px;border-radius:24px}.scale{gap:6px}.opt{font-size:1.05rem;padding:13px 14px}}
@@ -78,7 +78,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
 <body>
 <canvas id="confetti" aria-hidden="true"></canvas>
 <main class="wrap">
-  <header><div class="logo">Sign<span>Speak</span> <span style="color:var(--muted);font-weight:800;font-size:1rem">survey</span></div><div class="count" id="count">1 / 15</div></header>
+  <header><div class="logo">Sign<span>Speak</span> <span style="color:var(--muted);font-weight:600;font-size:1rem">survey</span></div><div class="count" id="count">1 / 15</div></header>
   <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="15" id="pb"><i id="fill"></i></div>
   <div class="cheer" id="cheer" aria-live="polite"></div>
   <section id="stage"></section>
@@ -90,7 +90,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
   var CFG = window.SIGNSPEAK || {};
   var Q = [
     {k:"role", tag:"About you", c:"var(--sky)", t:"Which side of SignSpeak did you try?", o:[
-      ["🤟","Signer"],["💬","Speaker"],["🔄","Both"]]},
+      ["🤟","Signer (camera side)"],["💬","Speaker (type / speak side)"],["🔄","Both"]]},
     {k:"device", tag:"About you", c:"var(--sky)", t:"What device are you using?", o:[
       ["💻","Laptop or desktop"],["📱","Phone"],["📟","Tablet"]]},
     {k:"familiarity", tag:"About you", c:"var(--sky)", t:"How familiar are you with sign language?", o:[
@@ -110,7 +110,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
       "Clearer instructions","Bigger text and buttons","Better colours","More signs","Faster response","Easier navigation","Better voice input","More helpful messages","Camera setup","Nothing, I like it as it is"]}
   ];
   var FACES = [["😖","var(--coral)"],["🙁","#FF9F5A"],["😐","var(--sun)"],["🙂","#7BCF8E"],["🤩","var(--mint)"]];
-  // var CHEERS = {3:"Great start! 🎈",6:"A third done. Nice! 🌟",9:"Over halfway there! 🚀",12:"Almost done, just a few more! 🔥",14:"Last one, we promise! 🎯"};
+  var CHEERS = {3:"Great start! 🎈",6:"A third done. Nice! 🌟",9:"Over halfway there! 🚀",12:"Almost done, just a few more! 🔥",14:"Last one, we promise! 🎯"};
   var N = Q.length, i = 0, A = {}, sendTimer = null, t0 = Date.now(), back = false;
   var $ = function(id){ return document.getElementById(id); };
   var stage = $("stage");
@@ -169,10 +169,10 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
         ch.appendChild(b);
       });
       card.appendChild(ch);
-      card.appendChild(el("p", {"class":"hint", text:"Tap as many as you think are needed."}));
+      card.appendChild(el("p", {"class":"hint", text:"Tap as many as you like."}));
       var more = el("div", {"class":"more"});
       more.appendChild(el("label", {"for":"comment", text:"Anything else you'd like to tell us? (optional)"}));
-      // var ta = el("textarea", {id:"comment", maxlength:"600", placeholder:"Your idea, a problem you hit, or something you loved…"});
+      var ta = el("textarea", {id:"comment", maxlength:"600", placeholder:"Your idea, a problem you hit, or something you loved…"});
       ta.value = A.comment || "";
       ta.addEventListener("input", function(){ A.comment = ta.value; persist(); });
       more.appendChild(ta); card.appendChild(more);
@@ -193,7 +193,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
     bk.addEventListener("click", function(){ go(i - 1); });
     nav.appendChild(bk);
     if (q.multi){
-      var sb = el("button", {type:"button", "class":"go", id:"send", text:"Send my answers →"});
+      var sb = el("button", {type:"button", "class":"go", id:"send", text:"Send my answers 🎉"});
       sb.addEventListener("click", submit);
       nav.appendChild(sb);
     } else {
@@ -266,8 +266,8 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
       card.appendChild(box); stage.replaceChildren(card); return;
     }
     box.appendChild(el("div", {"class":"big", text:"🎉"}));
-    box.appendChild(el("h1", {text:"Thank you for testing SignSpeak for us."}));
-    box.appendChild(el("p", {text:"You may close this tab and resume your own stuff now."}));
+    box.appendChild(el("h1", {text:"Thank you so much!"}));
+    box.appendChild(el("p", {text:"Your answers will help us make SignSpeak clearer and easier for everyone. You can close this tab now."}));
     if (status === "demo") box.appendChild(el("div", {"class":"demo", text:"Test mode: no Google Sheet is connected yet, so these answers were only kept in this browser. (Set SHEET_URL in docs/config.js.)"}));
     var a = el("a", {"class":"btn2", href: CFG.APP_URL || "#", text:"Back to SignSpeak"});
     box.appendChild(a);
