@@ -19,6 +19,9 @@ import theme        # noqa: E402
 theme.inject()
 ss = st.session_state
 
+import survey_mode  # noqa: E402
+survey_mode.render()      # no-op unless the app was opened with ?survey=1
+
 # first load: restore the page from the URL (?page=signer) so a browser refresh stays put
 if "page" not in ss:
     wanted = st.query_params.get("page", "home")

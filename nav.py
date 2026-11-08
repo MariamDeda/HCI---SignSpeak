@@ -9,10 +9,11 @@ PAGES = ("home", "signer", "hearing")
 def go(page):
     """Button callback: switch page. Also updates ?page=... so a browser refresh stays on the page."""
     st.session_state.page = page
-    if page == "home":
-        st.query_params.clear()
-    else:
+    st.query_params.clear()
+    if page != "home":
         st.query_params["page"] = page
+    if st.session_state.get("survey"):          # keep survey mode across a browser refresh
+        st.query_params["survey"] = "1"
 
 
 def topbar(title, subtitle, pill_html=""):

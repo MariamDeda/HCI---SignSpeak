@@ -159,6 +159,7 @@ div[data-testid="stExpander"] details{border-radius:16px; border:1.5px solid var
 .stToggle label p, .stCheckbox label p{font-weight:800;}
 div[class*="st-key-quick"] .stButton > button{border-radius:999px; min-height:2.5rem; padding:.2rem 1.1rem; background:#fff; width:100%;}
 div[class*="st-key-card_recent"] .stButton > button{width:100%; justify-content:flex-start; text-align:left; background:#FFFBEA; border-color:#EFD36A;}
+div.st-key-sv_loader{display:none}
 """
 
 
