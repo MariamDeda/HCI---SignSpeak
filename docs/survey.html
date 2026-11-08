@@ -4,12 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SignSpeak · Quick survey</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1B2A38;--muted:#4C6277;--line:#CFE0EA;--brand:#0B7F96;--brand-d:#08687B;--sky:#46B1E8;--mint:#35C590;--sun:#F5B800;--coral:#FF7A6B;--bg:#E4F2FA;--acc:var(--sky)}
 *{box-sizing:border-box}
-body{margin:0;color:var(--ink);font-family:"Open Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.45;min-height:100vh;
+body{margin:0;color:var(--ink);font-family:"Times New Roman",Tinos,"Liberation Serif",Times,serif;line-height:1.45;min-height:100vh;
   background:radial-gradient(900px 500px at 8% -5%,rgba(70,177,232,.45),transparent 60%),radial-gradient(800px 500px at 100% 10%,rgba(53,197,144,.35),transparent 60%),radial-gradient(700px 500px at 50% 105%,rgba(245,184,0,.28),transparent 60%),var(--bg)}
 body:before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(11,127,150,.14) 1.3px,transparent 1.4px);background-size:26px 26px;pointer-events:none}
 .wrap{position:relative;max-width:720px;margin:0 auto;padding:18px 16px 50px}
@@ -25,9 +23,9 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 @keyframes inb{from{opacity:0;transform:translateX(-34px)}to{opacity:1;transform:none}}
 .card:before{content:"";position:absolute;left:0;right:0;top:0;height:9px;background:var(--acc)}
 .tag{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:#0e3f4a;background:color-mix(in srgb,var(--acc) 28%,#fff);border-radius:999px;padding:6px 14px}
-h1{font-size:clamp(1.3rem,3.6vw,1.7rem);line-height:1.2;margin:.8rem 0 1.4rem;letter-spacing:-.02em;font-weight:700;outline:none}
+h1{font-size:clamp(1.35rem,3.6vw,1.75rem);line-height:1.2;margin:.8rem 0 1.4rem;letter-spacing:-.02em;font-weight:700;outline:none}
 .opts{display:grid;gap:12px}
-.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;font:inherit;font-weight:600;font-size:1.02rem;color:var(--ink);cursor:pointer;
+.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;font:inherit;font-weight:600;font-size:1.08rem;color:var(--ink);cursor:pointer;
   background:#F4FAFD;border:2px solid var(--line);border-radius:16px;padding:12px 16px;transition:transform .12s,border-color .12s,background .12s,box-shadow .12s}
 .opt .e{font-size:1.5rem;line-height:1;width:2.2rem;text-align:center}
 .opt:hover{transform:translateY(-2px);border-color:var(--acc);background:#fff;box-shadow:0 8px 18px rgba(27,42,56,.10)}
@@ -78,8 +76,8 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
 <body>
 <canvas id="confetti" aria-hidden="true"></canvas>
 <main class="wrap">
-  <header><div class="logo">Sign<span>Speak</span> <span style="color:var(--muted);font-weight:600;font-size:1rem">survey</span></div><div class="count" id="count">1 / 15</div></header>
-  <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="15" id="pb"><i id="fill"></i></div>
+  <header><div class="logo">Sign<span>Speak</span> <span style="color:var(--muted);font-weight:600;font-size:1rem">survey</span></div><div class="count" id="count"></div></header>
+  <div class="bar" role="progressbar" aria-valuemin="0" id="pb"><i id="fill"></i></div>
   <div class="cheer" id="cheer" aria-live="polite"></div>
   <section id="stage"></section>
 </main>
@@ -93,6 +91,8 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
       ["🤟","Signer (camera side)"],["💬","Speaker (type / speak side)"],["🔄","Both"]]},
     {k:"device", tag:"About you", c:"var(--sky)", t:"What device are you using?", o:[
       ["💻","Laptop or desktop"],["📱","Phone"],["📟","Tablet"]]},
+    {k:"age", tag:"About you", c:"var(--sky)", t:"What is your age group?", o:[
+      ["","Under 18"],["","18–24"],["","25–34"],["","35–44"],["","45–54"],["","55 or older"]]},
     {k:"familiarity", tag:"About you", c:"var(--sky)", t:"How familiar are you with sign language?", o:[
       ["🙅","Not at all"],["🌱","I know a few signs"],["🙂","Quite comfortable"],["🤟","Fluent"]]},
     {k:"usability", tag:"Usability", c:"var(--mint)", t:"Overall, how easy was SignSpeak to use?", s:["Very hard","Very easy"]},
@@ -109,6 +109,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
     {k:"improve", tag:"Your ideas", c:"var(--brand)", t:"What should we improve first?", multi:true, o:[
       "Clearer instructions","Bigger text and buttons","Better colours","More signs","Faster response","Easier navigation","Better voice input","More helpful messages","Camera setup","Nothing, I like it as it is"]}
   ];
+  var CHEERS = {};
   var FACES = [["😖","var(--coral)"],["🙁","#FF9F5A"],["😐","var(--sun)"],["🙂","#7BCF8E"],["🤩","var(--mint)"]];
   var N = Q.length, i = 0, A = {}, sendTimer = null, t0 = Date.now(), back = false;
   var $ = function(id){ return document.getElementById(id); };
@@ -128,7 +129,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
   function progress(){
     var done = Math.min(i, N);
     $("fill").style.width = (done / N * 100) + "%";
-    $("pb").setAttribute("aria-valuenow", done);
+    $("pb").setAttribute("aria-valuemax", N); $("pb").setAttribute("aria-valuenow", done);
     $("count").textContent = Math.min(i + 1, N) + " / " + N;
     $("cheer").textContent = CHEERS[i] || "";
   }
@@ -178,8 +179,8 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
     } else {             // single choice
       var og = el("div", {"class":"opts", role:"radiogroup", "aria-labelledby":"qh"});
       q.o.forEach(function(o, n){
-        var b = el("button", {type:"button", "class":"opt", role:"radio", "aria-checked": String(A[q.k] === o[1])}, [
-          el("span", {"class":"e", text:o[0]}), el("span", {text:o[1]}), el("span", {"class":"k", text:String(n + 1)})]);
+        var b = el("button", {type:"button", "class":"opt", role:"radio", "aria-checked": String(A[q.k] === o[1])},
+          (o[0] ? [el("span", {"class":"e", text:o[0]})] : []).concat([el("span", {text:o[1]}), el("span", {"class":"k", text:String(n + 1)})]));
         b.addEventListener("click", function(){ choose(o[1]); });
         og.appendChild(b);
       });
