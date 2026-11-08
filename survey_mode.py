@@ -55,7 +55,7 @@ _JS = r"""<!doctype html><html><body><script>
         var href = cfg.url + '?src=app&t=' + Math.round(el) + '&v=' + encodeURIComponent(seen);
         if (!ready){
           ready = true;
-          box.innerHTML = '<a target="_top" rel="noopener"></a>';
+          box.innerHTML = '<a target="_blank" rel="noopener"></a>';
           box.firstChild.textContent = "✅ I'm done exploring · take the survey →";
         }
         box.firstChild.href = href;
