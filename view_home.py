@@ -36,6 +36,6 @@ def render():
                     for s in signs_ref.vocabulary())
     st.markdown(
         '<div class="foot">You can switch roles at any time with the <b>← Change role</b> button.'
-        '<br>Prototype knows these signs currently</div>'
+        '<br>Prototype knows these signs currently:</div>'
         f'<div class="chips">{chips}</div>',
         unsafe_allow_html=True)

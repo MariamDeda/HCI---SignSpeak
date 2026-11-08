@@ -196,19 +196,19 @@ def frames_for(sign):
 _PLAYER = r"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 :root{--ink:#23323F;--muted:#5F7080;--line:#DCE8EF;--brand:#1F7A8C;--brand-d:#186577;--sun:#FFF3C4;--sun-s:#F2B705}
 *{box-sizing:border-box}
-html,body{margin:0;background:transparent;color:var(--ink);font-family:"IBM Plex Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif}
+html,body{margin:0;background:transparent;color:var(--ink);font-family:"Open Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif}
 .stage{background:linear-gradient(135deg,#F2F9FE 0%,#F1FAF5 60%,#FFFBE8 100%);border:1px solid var(--line);
-  border-radius:24px;padding:18px 22px 16px;box-shadow:0 10px 32px rgba(35,50,63,.07)}
+  border-radius:12px;padding:14px 18px 12px;box-shadow:0 4px 14px rgba(35,50,63,.06)}
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;min-height:22px}
 #count{font-weight:600;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .dots{display:flex;gap:9px;flex-wrap:wrap}
 .dot{width:13px;height:13px;border-radius:50%;background:#C9DDE6;border:0;padding:0;cursor:pointer;transition:transform .25s,background .25s}
 .dot.on{background:var(--brand);transform:scale(1.4)}
 .main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
-.viz{position:relative;width:100%;aspect-ratio:1/1;max-height:340px;margin:auto;background:#fff;border-radius:20px;
+.viz{position:relative;width:100%;aspect-ratio:1/1;max-height:340px;margin:auto;background:#fff;border-radius:12px;
   border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center}
 canvas{width:100%;height:100%;display:block}
 .bigemoji{font-size:clamp(5.5rem,17vw,9.5rem);line-height:1;animation:float 2.6s ease-in-out infinite}
@@ -216,11 +216,11 @@ canvas{width:100%;height:100%;display:block}
 .hide{display:none!important}
 .info{min-width:0}
 .emoji{font-size:2.6rem;line-height:1}
-.label{font-size:clamp(2.6rem,7.5vw,4.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.04;margin:.12em 0 .28em;overflow-wrap:anywhere}
-.how{font-size:1.18rem;line-height:1.45;background:var(--sun);border-radius:16px;padding:13px 16px}
+.label{font-size:clamp(2rem,5.5vw,3.2rem);font-weight:700;letter-spacing:-.02em;line-height:1.04;margin:.12em 0 .28em;overflow-wrap:anywhere}
+.how{font-size:1rem;line-height:1.45;background:var(--sun);border-radius:8px;padding:13px 16px}
 .how b{display:block;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:#7A5C00;margin-bottom:4px}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-button.c{font:inherit;font-weight:600;font-size:.98rem;padding:10px 18px;border-radius:14px;cursor:pointer;
+button.c{font:inherit;font-weight:600;font-size:.9rem;padding:8px 15px;border-radius:8px;cursor:pointer;
   border:1.5px solid var(--line);background:#fff;color:var(--ink);transition:transform .15s,box-shadow .15s,background .15s}
 button.c:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 12px rgba(35,50,63,.10)}
 button.c:focus-visible,.dot:focus-visible{outline:3px solid #8CD3E4;outline-offset:2px}
@@ -284,9 +284,8 @@ function show(i){
   $('big').textContent = s.emoji;
   const has = !!s.frames;
   cv.classList.toggle('hide', !has); $('big').classList.toggle('hide', has);
-  $('cap').textContent = has
-    ? 'Animated from recorded hand landmarks, shown as in a mirror: copy it as if looking at yourself.'
-    : 'Picture is a stand-in. Follow the description to make the sign.';
+  $('cap').textContent = has ? '' : 'Picture is a stand-in. Follow the description to make the sign.';
+  $('cap').style.display = has ? 'none' : '';
   document.querySelectorAll('.dot').forEach((d,k) => d.classList.toggle('on', k === idx));
   $('prev').disabled = idx === 0; $('next').disabled = idx === n-1;
   const info = $('info'); info.classList.remove('swap'); void info.offsetWidth; info.classList.add('swap');

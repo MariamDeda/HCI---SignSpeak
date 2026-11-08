@@ -29,7 +29,7 @@ _JS = r"""<!doctype html><html><body><script>
     if (start && Date.now() - start > 3 * 3600 * 1000) start = 0;   // stale value from an old visit
     if (!start){ start = Date.now(); store.setItem('ss_start', start); }
     var css = document.createElement('style');
-    css.textContent = '#ss-sv{position:fixed;right:22px;bottom:22px;z-index:2147483000;font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;max-width:calc(100vw - 32px)}'
+    css.textContent = '#ss-sv{position:fixed;right:22px;bottom:22px;z-index:2147483000;font-family:"Open Sans","Segoe UI",system-ui,sans-serif;max-width:calc(100vw - 32px)}'
       + '#ss-sv a,#ss-sv .w{display:flex;align-items:center;gap:10px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;padding:13px 20px;box-shadow:0 10px 28px rgba(27,42,56,.28)}'
       + '#ss-sv .w{background:#fff;color:#1B2A38;border:2px solid #CFE0EA;font-weight:600}'
       + '#ss-sv .w b{color:#0B7F96;font-variant-numeric:tabular-nums}'

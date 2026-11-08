@@ -23,8 +23,8 @@ ss = st.session_state
 
 # text size choice -> (current word size, sentence size)
 SIZES = {
-    "Large":  ("clamp(2.2rem, 4.8vw, 3.8rem)", "clamp(1.15rem, 2.3vw, 1.6rem)"),
-    "Larger": ("clamp(2.8rem, 6vw, 5rem)",     "clamp(1.3rem, 2.8vw, 2rem)"),
+    "Large":  ("clamp(2rem, 4vw, 3.2rem)", "clamp(1.05rem, 2vw, 1.4rem)"),
+    "Larger": ("clamp(2.4rem, 5vw, 4.2rem)",     "clamp(1.2rem, 2.4vw, 1.7rem)"),
     "Huge":   ("clamp(4rem, 10vw, 9rem)",      "clamp(2rem, 4.8vw, 3.6rem)"),
 }
 

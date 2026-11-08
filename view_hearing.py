@@ -95,7 +95,7 @@ def render():
     ss.setdefault("h_history", [])
 
     nav.topbar("Speaker",
-               "Say or type your message. The signer will see it as signs, big and clear.")
+               "Say or type your message for the signer to see.")
 
     left, right = st.columns([5, 7], gap="large")
 
@@ -137,8 +137,8 @@ def render():
             else:
                 st.markdown('<div class="page-sub">Messages you send appear here, so you can show them '
                             'again with one tap.</div>', unsafe_allow_html=True)
-            st.markdown('<div class="tip">💡 Short sentences work best. Words that have no sign yet are '
-                        'skipped, and you will see which ones.</div>', unsafe_allow_html=True)
+            # st.markdown('<div class="tip">💡 Short sentences work best. Words that have no sign yet are '
+            #             'skipped, and you will see which ones.</div>', unsafe_allow_html=True)
 
     # ---------------------------------------------------------------- step 2: the sign
     with right:
@@ -149,7 +149,7 @@ def render():
             if fb:
                 st.markdown(theme.banner(*fb), unsafe_allow_html=True)
             if ss.h_signs:
-                theme.embed(signs_ref.player_html(ss.h_signs, ss.h_nonce), height=570)
+                theme.embed(signs_ref.player_html(ss.h_signs, ss.h_nonce), height=490)
             else:
                 st.markdown('<div class="empty-stage"><span class="wave">👋</span>'
                             'Your message will appear here as a sign.<br>'

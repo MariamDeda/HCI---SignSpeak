@@ -5,21 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SignSpeak · Quick survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1B2A38;--muted:#4C6277;--line:#CFE0EA;--brand:#0B7F96;--brand-d:#08687B;--sky:#46B1E8;--mint:#35C590;--sun:#F5B800;--coral:#FF7A6B;--bg:#E4F2FA;--acc:var(--sky)}
 *{box-sizing:border-box}
-body{margin:0;color:var(--ink);font-family:"IBM Plex Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.45;min-height:100vh;
+body{margin:0;color:var(--ink);font-family:"Open Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.45;min-height:100vh;
   background:radial-gradient(900px 500px at 8% -5%,rgba(70,177,232,.45),transparent 60%),radial-gradient(800px 500px at 100% 10%,rgba(53,197,144,.35),transparent 60%),radial-gradient(700px 500px at 50% 105%,rgba(245,184,0,.28),transparent 60%),var(--bg)}
 body:before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(11,127,150,.14) 1.3px,transparent 1.4px);background-size:26px 26px;pointer-events:none}
 .wrap{position:relative;max-width:720px;margin:0 auto;padding:18px 16px 50px}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .logo{font-weight:700;font-size:1.35rem;letter-spacing:-.02em}.logo span{color:var(--brand)}
 .count{font-weight:700;color:var(--brand);background:#fff;border:2px solid var(--line);border-radius:999px;padding:5px 14px;font-size:.95rem}
-.bar{height:16px;border-radius:999px;background:#fff;border:2px solid var(--line);overflow:hidden;margin-bottom:6px}
+.bar{height:10px;border-radius:999px;background:#fff;border:2px solid var(--line);overflow:hidden;margin-bottom:6px}
 .bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--sky),var(--mint),var(--sun));transition:width .45s cubic-bezier(.3,1.2,.5,1)}
 .cheer{min-height:1.6em;text-align:center;font-weight:600;color:var(--muted);margin:2px 0 12px}
-.card{background:#fff;border-radius:24px;padding:24px 24px 20px;box-shadow:0 14px 38px rgba(27,42,56,.13);position:relative;overflow:hidden;animation:in .38s cubic-bezier(.2,1,.4,1)}
+.card{background:#fff;border-radius:12px;padding:22px 22px 18px;box-shadow:0 14px 38px rgba(27,42,56,.13);position:relative;overflow:hidden;animation:in .38s cubic-bezier(.2,1,.4,1)}
 .card.back{animation-name:inb}
 @keyframes in{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
 @keyframes inb{from{opacity:0;transform:translateX(-34px)}to{opacity:1;transform:none}}
@@ -110,7 +110,6 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
       "Clearer instructions","Bigger text and buttons","Better colours","More signs","Faster response","Easier navigation","Better voice input","More helpful messages","Camera setup","Nothing, I like it as it is"]}
   ];
   var FACES = [["😖","var(--coral)"],["🙁","#FF9F5A"],["😐","var(--sun)"],["🙂","#7BCF8E"],["🤩","var(--mint)"]];
-  var CHEERS = {3:"Great start! 🎈",6:"A third done. Nice! 🌟",9:"Over halfway there! 🚀",12:"Almost done, just a few more! 🔥",14:"Last one, we promise! 🎯"};
   var N = Q.length, i = 0, A = {}, sendTimer = null, t0 = Date.now(), back = false;
   var $ = function(id){ return document.getElementById(id); };
   var stage = $("stage");

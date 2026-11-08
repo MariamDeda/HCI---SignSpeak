@@ -6,12 +6,12 @@
 <title>SignSpeak · Help us test it</title>
 <meta name="description" content="Try SignSpeak for a minute, then answer a few quick clicks. No typing needed.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1B2A38;--muted:#4C6277;--line:#CFE0EA;--brand:#0B7F96;--brand-d:#08687B;--sky:#46B1E8;--mint:#35C590;--sun:#F5B800;--coral:#FF7A6B;--bg:#E4F2FA}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;color:var(--ink);font-family:"IBM Plex Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.5;
+body{margin:0;color:var(--ink);font-family:"Open Sans","Segoe UI Variable","Segoe UI",system-ui,sans-serif;line-height:1.5;
   background:radial-gradient(900px 500px at 8% -5%,rgba(70,177,232,.45),transparent 60%),radial-gradient(800px 500px at 100% 10%,rgba(53,197,144,.35),transparent 60%),radial-gradient(700px 500px at 50% 105%,rgba(245,184,0,.28),transparent 60%),var(--bg);
   min-height:100vh}
 body:before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(11,127,150,.14) 1.3px,transparent 1.4px);background-size:26px 26px;pointer-events:none;z-index:0}
@@ -25,7 +25,7 @@ h1 em{font-style:normal;background:linear-gradient(120deg,var(--brand),var(--min
 .lead{font-size:1.05rem;color:var(--muted);max-width:640px;margin:0 auto 1.2rem;font-weight:700}
 .badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 1.6rem}
 .badge{background:#fff;border:2px solid var(--line);border-radius:999px;padding:7px 15px;font-weight:600;font-size:.95rem;box-shadow:0 3px 0 var(--line)}
-.btn{display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;text-decoration:none;color:#fff;font:inherit;font-weight:700;font-size:1.1rem;padding:14px 32px;border-radius:999px;
+.btn{display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;text-decoration:none;color:#fff;font:inherit;font-weight:700;font-size:1rem;padding:12px 28px;border-radius:999px;
   background:linear-gradient(135deg,var(--mint),var(--brand));box-shadow:0 12px 30px rgba(11,127,150,.38);transition:transform .15s,box-shadow .15s}
 .btn:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(11,127,150,.45)}
 .btn:focus-visible{outline:4px solid var(--sun);outline-offset:4px}
@@ -33,10 +33,10 @@ h1 em{font-style:normal;background:linear-gradient(120deg,var(--brand),var(--min
 .cta{text-align:center}.cta small{display:block;margin-top:12px;color:var(--muted);font-weight:700}
 h2{font-size:1.4rem;margin:2.2rem 0 .9rem;text-align:center;letter-spacing:-.02em;font-weight:700}
 .grid{display:grid;gap:18px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
-.card{background:#fff;border-radius:20px;padding:20px;border:2px solid #fff;box-shadow:0 10px 30px rgba(27,42,56,.10);position:relative;overflow:hidden}
+.card{background:#fff;border-radius:12px;padding:18px;border:2px solid #fff;box-shadow:0 10px 30px rgba(27,42,56,.10);position:relative;overflow:hidden}
 .card:before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:var(--a,var(--sky))}
 .card h3{margin:.4rem 0 .25rem;font-size:1.12rem;font-weight:700}.card p{margin:0;color:var(--muted);font-weight:700}
-.ic{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-size:1.6rem;background:color-mix(in srgb,var(--a,var(--sky)) 22%,#fff)}
+.ic{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-size:1.6rem;background:color-mix(in srgb,var(--a,var(--sky)) 22%,#fff)}
 .step{--a:var(--sky)}.step:nth-child(2){--a:var(--sun)}.step:nth-child(3){--a:var(--mint)}
 .num{position:absolute;right:16px;top:16px;font-size:2rem;font-weight:700;color:color-mix(in srgb,var(--a) 45%,#fff)}
 .role.s{--a:var(--sky)}.role.h{--a:var(--mint)}
