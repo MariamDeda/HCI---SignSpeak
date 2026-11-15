@@ -5,6 +5,9 @@ tensorflow==2.16.1        # or tensorflow-cpu==2.16.1
 scikit-learn
 matplotlib
 streamlit>=1.44
+# Only for islr_extract.py (Google ISLR import)
+pandas
+pyarrow
 # Optional (speech): the app still runs without them
 sounddevice
 vosk

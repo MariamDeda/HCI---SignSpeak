@@ -81,8 +81,9 @@ def _offline_recording():
                          "Please try again, or type your message instead.")
     else:
         if heard:
-            ss.h_input = heard
+            ss.h_pending_input = heard          # the box already exists in this run, so fill it on the next run
             process_text(heard, "voice")
+            st.rerun()
         else:
             ss.h_feedback = ("warn", "🎤", "I didn't catch that",
                              "Speak a little closer to the microphone and try again.")
@@ -93,6 +94,8 @@ def render():
     ss.setdefault("h_feedback", None)
     ss.setdefault("h_nonce", 0)
     ss.setdefault("h_history", [])
+    if "h_pending_input" in ss:                 # text from offline recording: set BEFORE the box is created
+        ss.h_input = ss.pop("h_pending_input")
 
     nav.topbar("Speaker",
                "Say or type your message for the signer to see.")

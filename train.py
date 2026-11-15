@@ -2,6 +2,9 @@
 
   python train.py                       # random stratified 80/20 split by sequence
   python train.py --test-person mariam  # leave one signer out (recommended: no leakage)
+  python train.py --test-person mariam --extra-data data_islr
+                                        # also learn from the Google ISLR clips (training only,
+                                        # never used for testing, so the test stays YOUR webcam data)
 """
 import argparse
 import json
@@ -30,6 +33,7 @@ def main():
     ap.add_argument("--data-dir", default=str(config.DATA_DIR))
     ap.add_argument("--test-person", default=None)
     ap.add_argument("--epochs", type=int, default=60)
+    ap.add_argument("--extra-data", nargs="*", default=[], help="more data folders, used for TRAINING only")
     args = ap.parse_args()
 
     from pathlib import Path
@@ -51,10 +55,19 @@ def main():
         Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
         split = "random stratified 80/20 (same signers in train and test - optimistic)"
     Xtr, Xva, ytr, yva = train_test_split(Xtr, ytr, test_size=0.15, stratify=ytr, random_state=1)
+    n_own = len(Xtr)
+    for folder in args.extra_data:                       # validation and test stay your own recordings
+        Xe, ye, pe = load_sequences(Path(folder))
+        print(f"Extra data {folder}: {len(Xe)} sequences from {len(set(pe))} signers")
+        Xtr, ytr = np.concatenate([Xtr, Xe]), np.concatenate([ytr, ye])
 
     rng = np.random.default_rng(0)
     Xtr_aug = augment(Xtr, rng)
     ytr_aug = np.tile(ytr, 4)
+    # classes with fewer sequences (for example a sign that is not in the extra data) count more
+    counts = np.bincount(ytr_aug, minlength=len(config.SIGNS))
+    class_weight = {i: float(len(ytr_aug) / (np.count_nonzero(counts) * c)) for i, c in enumerate(counts) if c}
+    print("Training sequences per class:", {s: int(counts[i]) for i, s in enumerate(config.SIGNS)}, f"(own: {n_own})")
 
     inp = keras.Input((config.SEQ_LEN, config.FEATURE_DIM))
     h = layers.LSTM(64, return_sequences=True)(inp)
@@ -65,7 +78,7 @@ def main():
     out = layers.Dense(len(config.SIGNS), activation="softmax")(h)
     model = keras.Model(inp, out)
     model.compile("adam", "sparse_categorical_crossentropy", metrics=["accuracy"])
-    model.fit(Xtr_aug, ytr_aug, validation_data=(Xva, yva), epochs=args.epochs, batch_size=16,
+    model.fit(Xtr_aug, ytr_aug, validation_data=(Xva, yva), epochs=args.epochs, batch_size=16, class_weight=class_weight,
               callbacks=[keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)],
               verbose=2)
 

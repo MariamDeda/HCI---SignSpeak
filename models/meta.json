@@ -10,9 +10,9 @@
   ],
   "seq_len": 30,
   "feature_dim": 65,
-  "split": "leave-one-signer-out (mama)",
-  "n_train": 119,
-  "n_val": 21,
-  "n_test": 12,
-  "test_accuracy": 0.5
+  "split": "random stratified 80/20 (same signers in train and test - optimistic)",
+  "n_train": 2006,
+  "n_val": 34,
+  "n_test": 56,
+  "test_accuracy": 0.8392857142857143
 }
