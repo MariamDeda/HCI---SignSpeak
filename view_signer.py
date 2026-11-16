@@ -186,13 +186,14 @@ def get_state(model, detected, label, conf, thr, n_frames, stab):
 
 # ------------------------------------------------------------------ page
 def _browser_mode():
+    """(use_browser_camera, error_text). Never falls back silently: a missing package is shown on the page."""
     if getattr(config, "CAMERA_MODE", "browser") != "browser":
-        return False
+        return False, None
     try:
         import browser_cam  # noqa: F401
-        return True
-    except Exception:
-        return False
+        return True, None
+    except Exception as e:
+        return False, f"{type(e).__name__}: {e}"
 
 
 def render_browser(model, model_err, signs):
@@ -293,8 +294,15 @@ def render_browser(model, model_err, signs):
 def render():
     model, model_err = get_model()
     signs = signs_ref.all_signs()         # the model's own labels (falls back to config.SIGNS)
-    if _browser_mode():
+    use_browser, cam_err = _browser_mode()
+    if use_browser:
         return render_browser(model, model_err, signs)
+    if cam_err:
+        st.markdown(theme.banner("err", "📷", "Browser camera could not start",
+                                 html.escape(cam_err + "  -  add 'streamlit-webrtc' to requirements.txt, "
+                                             "push it, and reboot the app. Falling back to the server camera, "
+                                             "which does not exist on Streamlit Cloud.")),
+                    unsafe_allow_html=True)
     running = bool(ss.get("running"))
     if not running:
         release_camera()                      # camera light off whenever the switch is off

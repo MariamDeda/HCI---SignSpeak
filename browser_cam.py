@@ -121,6 +121,16 @@ class SignProcessor(VideoProcessorBase):
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 
+def _twilio_servers():
+    """Optional: free Twilio TURN. Put TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN in the Streamlit secrets."""
+    try:
+        sid, tok = st.secrets["TWILIO_ACCOUNT_SID"], st.secrets["TWILIO_AUTH_TOKEN"]
+        from twilio.rest import Client
+        return Client(sid, tok).tokens.create().ice_servers
+    except Exception:
+        return []
+
+
 def _rtc_configuration():
     """Public STUN is enough on most networks. If the deployed app cannot connect, add a TURN server
     in the Streamlit secrets:  [turn]  urls = ["turn:..."]  username = "..."  credential = "..."."""
@@ -132,6 +142,7 @@ def _rtc_configuration():
                             "credential": turn["credential"]})
     except Exception:
         pass
+    servers += _twilio_servers()
     return {"iceServers": servers}
 
 
