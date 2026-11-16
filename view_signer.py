@@ -185,9 +185,116 @@ def get_state(model, detected, label, conf, thr, n_frames, stab):
 
 
 # ------------------------------------------------------------------ page
+def _browser_mode():
+    if getattr(config, "CAMERA_MODE", "browser") != "browser":
+        return False
+    try:
+        import browser_cam  # noqa: F401
+        return True
+    except Exception:
+        return False
+
+
+def render_browser(model, model_err, signs):
+    """Live camera through the browser (WebRTC): works locally and on streamlit.app."""
+    import browser_cam
+    ss.setdefault("signer_log", [])
+    top_ph = st.empty()                    # filled last, so the pill shows the real state
+
+    with st.container(key="card_toolbar"):
+        c2, c3, c4, c5 = st.columns([2, 2.6, 1.1, 1.3], vertical_alignment="center")
+        c2.toggle("🔊 Speak aloud", key="speak", help="Say each recognised sign out loud.")
+        with c3:
+            st.segmented_control("Text size", list(SIZES), default="Larger", key="size",
+                                 help="How big the words look on screen.")
+        c4.button("🗑 Clear", on_click=clear_all, help="Remove all words from the screen.")
+        c5.button("🔁 Repeat", on_click=repeat_last, help="Say the last sign out loud again.")
+
+    if model is None:
+        msg = model_err or ("No trained model yet. Hand tracking works, but signs are not recognised until "
+                            "you run collect_data.py and train.py. You can try the demo buttons in Settings.")
+        st.markdown(theme.banner("warn", "🧠", "No sign model available", html.escape(msg)),
+                    unsafe_allow_html=True)
+
+    left, right = st.columns([5, 6], gap="large")
+    with left:
+        with st.container(key="card_camera"):
+            st.markdown('<div class="sec">Your camera</div>', unsafe_allow_html=True)
+            ctx = browser_cam.camera(model, signs, get_logger())
+            status_ph = st.empty()
+            conf_ph = st.empty()
+    with right:
+        with st.container(key="card_display"):
+            disp_ph = st.empty()
+
+    with st.expander("⚙️ Settings and demo mode"):
+        st.slider("Confidence needed", 0.50, 0.99, config.CONF_THRESHOLD, 0.01, key="conf_thr",
+                  help="Higher = fewer mistakes, but you may need to repeat signs more often.")
+        st.slider("Steadiness needed", 1, 15, config.STABLE_PREDICTIONS, key="n_stable",
+                  help="How many matching readings in a row before a sign is accepted.")
+        st.text_input("Experiment label (saved in the logs)", value="lab", key="condition")
+        st.markdown("**Try it without a camera** (simulated, not real recognition)")
+        cols = st.columns(max(len(signs_ref.vocabulary()), 1))
+        for col, s in zip(cols, signs_ref.vocabulary()):
+            col.button(signs_ref.pretty(s), key=f"sim_{s}", on_click=simulate, args=(s,))
+
+    speaker_ph = st.empty()
+    size = ss.get("size") or "Larger"
+    if ss.get("speak") and not ss.get("_prev_speak"):
+        ss.pending_say = "Voice is on"
+    ss["_prev_speak"] = bool(ss.get("speak"))
+    if ss.get("pending_say"):
+        theme.say(speaker_ph, ss.pop("pending_say"))
+    disp_ph.markdown(display_html(size), unsafe_allow_html=True)
+
+    def show_state(state, conf, thr, hint=None):
+        cls, ic, title, default_hint = STATES[state]
+        status_ph.markdown(theme.banner(cls, ic, title, hint or default_hint), unsafe_allow_html=True)
+        if state in ("off", "camfail", "mismatch"):
+            conf_ph.empty()
+        elif state == "nosign":
+            conf_ph.progress(min(max(conf, 0.0), 1.0), text=f"{conf:.0%} sure this is not a sign")
+        else:
+            conf_ph.progress(min(max(conf, 0.0), 1.0), text=f"Confidence {conf:.0%} · needs {thr:.0%}")
+
+    def pill(on):
+        top_ph.empty()
+        with top_ph.container():
+            p = ('<span class="pill live"><span class="dot"></span>Camera on</span>' if on
+                 else '<span class="pill off"><span class="dot"></span>Camera off</span>')
+            nav.topbar("Signer", "Press Start camera and sign. Your words appear on the screen once recognized.", p)
+
+    playing = bool(ctx.state.playing)
+    pill(playing)
+    if not playing:
+        show_state("off", 0.0, ss.conf_thr,
+                   "Press “Start camera” under the picture and allow camera access.")
+        return
+
+    proc = ctx.video_processor
+    show_state("warming", 0.0, ss.conf_thr)
+    while ctx.state.playing:
+        proc = ctx.video_processor
+        if proc is not None:
+            proc.set_params(ss.conf_thr, ss.n_stable, ss.condition)
+            snap = proc.snapshot()
+            for lab in snap["commits"]:
+                text = signs_ref.pretty(lab)
+                add_signed(text)
+                disp_ph.markdown(display_html(size), unsafe_allow_html=True)
+                if ss.get("speak"):
+                    theme.say(speaker_ph, text)
+            show_state(snap["state"], snap["conf"], snap["thr"], snap["hint"])
+        time.sleep(0.15)
+    pill(False)
+    show_state("off", 0.0, ss.conf_thr, "Camera stopped.")
+
+
 def render():
     model, model_err = get_model()
     signs = signs_ref.all_signs()         # the model's own labels (falls back to config.SIGNS)
+    if _browser_mode():
+        return render_browser(model, model_err, signs)
     running = bool(ss.get("running"))
     if not running:
         release_camera()                      # camera light off whenever the switch is off

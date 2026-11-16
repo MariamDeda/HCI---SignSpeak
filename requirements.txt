@@ -12,3 +12,4 @@ pyarrow
 sounddevice
 vosk
 pyttsx3
+streamlit-webrtc>=0.60
