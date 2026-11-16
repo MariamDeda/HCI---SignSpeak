@@ -4,8 +4,10 @@
  * (Execute as: Me, Who has access: Anyone). Copy the Web app URL into docs/config.js (SHEET_URL).
  */
 var COLUMNS = ["submitted_at","id","src","seconds_in_app","roles_visited","survey_seconds","screen",
-  "role","device","age","familiarity","usability","learnability","affordance","visibility","feedback","navigation",
-  "accessibility","efficiency","aesthetics","clarity","recommend","improve","comment"];
+  "role","device","age","familiarity",
+  "sg_setup","sg_visibility","sg_feedback","sg_accuracy","sg_speed","sg_controls","sg_readability","sg_effort","sg_recommend",
+  "sp_inputmethod","sp_input","sp_match","sp_clarity","sp_speed","sp_controls","sp_feedback","sp_realism","sp_recommend",
+  "improve","comment"];
 
 function doPost(e) {
   var lock = LockService.getScriptLock();

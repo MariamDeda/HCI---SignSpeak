@@ -1,6 +1,6 @@
 """Survey mode: only active when the app is opened with ?survey=1 (the "Start" button of the intro page).
 
-After 60 seconds a floating "I'm done exploring" button appears on every page of the app and
+Once a view (Signer or Speaker) is chosen, a 60-second timer starts; after that a floating "I'm done exploring" button appears on every page of the app and
 takes the participant to the survey (GitHub Pages). The timer lives in the browser (sessionStorage),
 so it keeps counting when the participant switches pages, and a rerun of Streamlit never resets it.
 
@@ -25,9 +25,9 @@ _JS = r"""<!doctype html><html><body><script>
     // each press of "Start" on the intro page brings a fresh ?sv=<time> id, so every visit counts its own minute
     var sv = new URLSearchParams(location.search).get('sv') || '';
     var start = +store.getItem('ss_start') || 0;
-    if (sv && store.getItem('ss_sv') !== sv){ store.setItem('ss_sv', sv); store.setItem('ss_roles', ''); start = 0; }
-    if (start && Date.now() - start > 3 * 3600 * 1000) start = 0;   // stale value from an old visit
-    if (!start){ start = Date.now(); store.setItem('ss_start', start); }
+    if (sv && store.getItem('ss_sv') !== sv){ store.setItem('ss_sv', sv); store.setItem('ss_roles', ''); store.setItem('ss_start', ''); start = 0; }
+    if (start && Date.now() - start > 3 * 3600 * 1000){ start = 0; store.setItem('ss_start', ''); }   // stale value from an old visit
+    // the minute only starts once a view (Signer or Speaker) has been chosen
     var css = document.createElement('style');
     css.textContent = '#ss-sv{position:fixed;right:22px;bottom:22px;z-index:2147483000;font-family:"Open Sans","Segoe UI",system-ui,sans-serif;max-width:calc(100vw - 32px)}'
       + '#ss-sv a,#ss-sv .w{display:flex;align-items:center;gap:10px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;padding:13px 20px;box-shadow:0 10px 28px rgba(27,42,56,.28)}'
@@ -52,7 +52,13 @@ _JS = r"""<!doctype html><html><body><script>
     }
     function fmt(s){ s = Math.max(0, Math.ceil(s)); return Math.floor(s/60) + ':' + ('0' + s%60).slice(-2); }
     function tick(){
-      var el = (Date.now() - start) / 1000, seen = roles();
+      var seen = roles();
+      if (!start && seen){ start = Date.now(); store.setItem('ss_start', start); }
+      if (!start){
+        box.innerHTML = '<div class="w">👋 Choose <b>Signer</b> or <b>Speaker</b> to start exploring</div>';
+        return;
+      }
+      var el = (Date.now() - start) / 1000;
       if (el < cfg.wait){
         box.innerHTML = '<div class="w">⏱ Explore freely · survey unlocks in <b>' + fmt(cfg.wait - el) + '</b></div>';
       } else {

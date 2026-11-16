@@ -86,39 +86,73 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
 (function(){
   "use strict";
   var CFG = window.SIGNSPEAK || {};
-  var Q = [
-    {k:"role", tag:"About you", c:"var(--sky)", t:"Which side of SignSpeak did you try?", o:[
+  var SG = "var(--mint)", SP = "var(--sun)", SKY = "var(--sky)";
+  // v: "sg" = only for the Signer view, "sp" = only for the Speaker view, none = everybody.
+  // Answers to "role" decide which blocks are shown; someone who tried both views gets both blocks.
+  var QS_ALL = [
+    {k:"role", tag:"About you", c:SKY, t:"Which side of SignSpeak did you try?", o:[
       ["🤟","Signer (camera side)"],["💬","Speaker (type / speak side)"],["🔄","Both"]]},
-    {k:"device", tag:"About you", c:"var(--sky)", t:"What device are you using?", o:[
+    {k:"device", tag:"About you", c:SKY, t:"What device are you using?", o:[
       ["💻","Laptop or desktop"],["📱","Phone"],["📟","Tablet"]]},
-    {k:"age", tag:"About you", c:"var(--sky)", t:"What is your age group?", o:[
+    {k:"age", tag:"About you", c:SKY, t:"What is your age group?", o:[
       ["","Under 18"],["","18–24"],["","25–34"],["","35–44"],["","45–54"],["","55 or older"]]},
-    {k:"familiarity", tag:"About you", c:"var(--sky)", t:"How familiar are you with sign language?", o:[
+    {k:"familiarity", tag:"About you", c:SKY, t:"How familiar are you with sign language?", o:[
       ["🙅","Not at all"],["🌱","I know a few signs"],["🙂","Quite comfortable"],["🤟","Fluent"]]},
-    {k:"usability", tag:"Usability", c:"var(--mint)", t:"Overall, how easy was SignSpeak to use?", s:["Very hard","Very easy"]},
-    {k:"learnability", tag:"Learnability", c:"var(--sun)", t:"How quickly did you work out what to do, without any help?", s:["Very slowly","Instantly"]},
-    {k:"affordance", tag:"Affordance", c:"var(--coral)", t:"Was it obvious what you could tap, type into or switch on?", s:["Not at all","Totally obvious"]},
-    {k:"visibility", tag:"Visibility", c:"var(--sky)", t:"Could you easily see what the app was doing and where you were?", s:["Never","Always"]},
-    {k:"feedback", tag:"Feedback", c:"var(--mint)", t:"Did the app tell you clearly when something worked, or went wrong?", s:["Never clear","Always clear"]},
-    {k:"navigation", tag:"Navigation", c:"var(--sun)", t:"How easy was it to switch roles or go back?", s:["Very hard","Very easy"]},
-    {k:"accessibility", tag:"Accessibility", c:"var(--coral)", t:"How comfortable were the text size, colours and buttons for you?", s:["Hard to read","Very comfortable"]},
-    {k:"efficiency", tag:"Efficiency", c:"var(--sky)", t:"How quickly could you do what you wanted to do?", s:["Too slow","Fast"]},
-    {k:"aesthetics", tag:"Look and feel", c:"var(--mint)", t:"How pleasant did the app look?", s:["Not at all","Love it"]},
-    {k:"clarity", tag:"Understanding", c:"var(--sun)", t:"How clear was the text or sign the app showed?", s:["Confusing","Very clear"]},
-    {k:"recommend", tag:"Overall", c:"var(--coral)", t:"How likely are you to recommend SignSpeak to a friend?", s:["Never","Definitely"]},
-    {k:"improve", tag:"Your ideas", c:"var(--brand)", t:"What should we improve first?", multi:true, o:[
-      "Clearer instructions","Bigger text and buttons","Better colours","More signs","Faster response","Easier navigation","Better voice input","More helpful messages","Camera setup","Nothing, I like it as it is"]}
+
+    // ---- Signer view: camera in, big text (and voice) out
+    {v:"sg", k:"sg_setup", tag:"Signer · Getting started", c:SG, t:"How easy was it to turn on the camera and start signing?", s:["Very hard","Very easy"]},
+    {v:"sg", k:"sg_visibility", tag:"Signer · Visibility", c:SG, t:"Could you clearly see your camera picture and whether your hand was detected?", s:["Not at all","Very clearly"]},
+    {v:"sg", k:"sg_feedback", tag:"Signer · Feedback", c:SG, t:"How clear were the messages that told you if a sign was recognised, uncertain or not seen?", s:["Very unclear","Very clear"]},
+    {v:"sg", k:"sg_accuracy", tag:"Signer · Accuracy", c:SG, t:"How often did the app show the word you meant to sign?", s:["Never","Always"]},
+    {v:"sg", k:"sg_speed", tag:"Signer · Speed", c:SG, t:"How quickly did a recognised sign appear on the screen?", s:["Too slow","Instantly"]},
+    {v:"sg", k:"sg_controls", tag:"Signer · Controls", c:SG, t:"How easy were the controls: Speak aloud, Text size, Clear and Repeat?", s:["Very hard","Very easy"]},
+    {v:"sg", k:"sg_readability", tag:"Signer · Readability", c:SG, t:"How easy was the large text to read?", s:["Hard to read","Very easy"]},
+    {v:"sg", k:"sg_effort", tag:"Signer · Effort", c:SG, t:"How tiring was it to hold each sign until the app accepted it?", s:["Very tiring","Not tiring"]},
+    {v:"sg", k:"sg_recommend", tag:"Signer · Overall", c:SG, t:"How likely are you to recommend the Signer side to a friend?", s:["Never","Definitely"]},
+
+    // ---- Speaker view: typed / spoken / tapped words in, animated signer out
+    {v:"sp", k:"sp_inputmethod", tag:"Speaker · Getting started", c:SP, t:"How did you mostly give your words to the app?", o:[
+      ["⌨️","Typing"],["🎤","Speaking"],["👆","Tapping a word"],["🔀","A mix"]]},
+    {v:"sp", k:"sp_input", tag:"Speaker · Input", c:SP, t:"How easy was it to enter your words?", s:["Very hard","Very easy"]},
+    {v:"sp", k:"sp_match", tag:"Speaker · Accuracy", c:SP, t:"How well did the signs shown match the words you entered?", s:["Not at all","Perfectly"]},
+    {v:"sp", k:"sp_clarity", tag:"Speaker · Understanding", c:SP, t:"How easy was it to understand the signs shown by the animated person?", s:["Very hard","Very easy"]},
+    {v:"sp", k:"sp_speed", tag:"Speaker · Speed", c:SP, t:"How was the speed of the animation?", o:[
+      ["⏩","Too fast"],["👌","About right"],["🐢","Too slow"]]},
+    {v:"sp", k:"sp_controls", tag:"Speaker · Controls", c:SP, t:"How easy were the player controls: pause, speed, replay, back and next?", s:["Very hard","Very easy"]},
+    {v:"sp", k:"sp_feedback", tag:"Speaker · Feedback", c:SP, t:"Was it clear which of your words had a sign and which did not?", s:["Very unclear","Very clear"]},
+    {v:"sp", k:"sp_realism", tag:"Speaker · Look and feel", c:SP, t:"How natural and realistic did the animated signer look?", s:["Not at all","Very natural"]},
+    {v:"sp", k:"sp_recommend", tag:"Speaker · Overall", c:SP, t:"How likely are you to recommend the Speaker side to a friend?", s:["Never","Definitely"]},
+
+    // ---- last question: ideas, with options for the side(s) the person tried
+    {k:"improve", tag:"Your ideas", c:"var(--brand)", t:"What should we improve first?", multi:true, o:function(){
+      var v = views(), out = [];
+      if (v.sg) out = out.concat(["Clearer hand guidance","Faster recognition","More accurate signs","Bigger text and buttons","Better voice output","Easier camera setup"]);
+      if (v.sp) out = out.concat(["Clearer animation","Slower or faster signs","More realistic signer","Easier typing","Better voice input"]);
+      out = out.concat(["More signs and words","Clearer instructions","More helpful messages"]);
+      return out.filter(function(x, n){ return out.indexOf(x) === n; }).concat(["Nothing, I like it as it is"]);
+    }}
   ];
+  var A = {};
+  function views(){
+    var r = A.role || "";
+    return {sg: r.indexOf("Signer") === 0 || r === "Both" || !r, sp: r.indexOf("Speaker") === 0 || r === "Both"};
+  }
+  function activeList(){
+    var v = views();
+    return QS_ALL.filter(function(q){ return !q.v || (q.v === "sg" && v.sg) || (q.v === "sp" && v.sp); });
+  }
+  var Q = activeList();
   var CHEERS = {};
   var FACES = [["😖","var(--coral)"],["🙁","#FF9F5A"],["😐","var(--sun)"],["🙂","#7BCF8E"],["🤩","var(--mint)"]];
-  var N = Q.length, i = 0, A = {}, sendTimer = null, t0 = Date.now(), back = false;
+  var N = Q.length, i = 0, sendTimer = null, t0 = Date.now(), back = false;
   var $ = function(id){ return document.getElementById(id); };
   var stage = $("stage");
   var qs = new URLSearchParams(location.search);
 
-  try { var saved = JSON.parse(sessionStorage.getItem("ss_sv_state") || "null");
-    if (saved && saved.A){ A = saved.A; i = Math.min(saved.i || 0, N - 1); } } catch(e){}
-  function persist(){ try { sessionStorage.setItem("ss_sv_state", JSON.stringify({A:A, i:i})); } catch(e){} }
+  function refresh(){ Q = activeList(); N = Q.length; }
+  try { var saved = JSON.parse(sessionStorage.getItem("ss_sv_state2") || "null");
+    if (saved && saved.A){ A = saved.A; refresh(); i = Math.min(saved.i || 0, N - 1); } } catch(e){}
+  function persist(){ try { sessionStorage.setItem("ss_sv_state2", JSON.stringify({A:A, i:i})); } catch(e){} }
 
   function el(tag, attrs, kids){
     var e = document.createElement(tag);
@@ -157,7 +191,8 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
     } else if (q.multi){ // last question: chips + optional comment
       var ch = el("div", {"class":"chips", role:"group", "aria-labelledby":"qh"});
       var cur = A[q.k] || [];
-      q.o.forEach(function(name){
+      var opts = typeof q.o === "function" ? q.o() : q.o;
+      opts.forEach(function(name){
         var b = el("button", {type:"button", "class":"chip", "aria-pressed": String(cur.indexOf(name) >= 0), text:name});
         b.addEventListener("click", function(){
           var arr = A[q.k] || [], p = arr.indexOf(name);
@@ -206,7 +241,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
   }
 
   function choose(v){
-    var q = Q[i]; A[q.k] = v; persist();
+    var q = Q[i]; A[q.k] = v; if (q.k === "role") refresh(); persist();
     clearTimeout(sendTimer);
     var group = stage.querySelector("[role=radiogroup]");
     Array.prototype.forEach.call(group.children, function(b, n){
@@ -236,7 +271,8 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
       submitted_at: new Date().toISOString(), src: qs.get("src") || "direct",
       seconds_in_app: qs.get("t") ? +qs.get("t") : "", roles_visited: qs.get("v") || "",
       survey_seconds: Math.round((Date.now() - t0) / 1000), screen: screen.width + "x" + screen.height};
-    Q.forEach(function(q){ p[q.k] = q.multi ? (A[q.k] || []).join("; ") : (A[q.k] != null ? A[q.k] : ""); });
+    var shown = {}; Q.forEach(function(q){ shown[q.k] = 1; });
+    QS_ALL.forEach(function(q){ p[q.k] = !shown[q.k] ? "" : (q.multi ? (A[q.k] || []).join("; ") : (A[q.k] != null ? A[q.k] : "")); });
     p.comment = (A.comment || "").trim();
     return p;
   }
@@ -252,7 +288,7 @@ textarea:focus{outline:4px solid rgba(70,177,232,.45);border-color:var(--sky);ba
   }
 
   function finish(status){
-    try { sessionStorage.removeItem("ss_sv_state"); } catch(e){}
+    try { sessionStorage.removeItem("ss_sv_state2"); } catch(e){}
     i = N; $("fill").style.width = "100%"; $("count").textContent = "Done 🎉"; $("cheer").textContent = "";
     var card = el("div", {"class":"card"}); card.style.setProperty("--acc", "var(--mint)");
     var box = el("div", {"class":"thanks"});
