@@ -31,7 +31,7 @@ def process_text(text, source="typed"):
         return
     keys, unknown = signs_ref.map_text(text)
     ss.h_signs, ss.h_unknown, ss.h_text, ss.h_source = keys, unknown, text, source
-    vocab = ", ".join(signs_ref.pretty(s) for s in signs_ref.vocabulary())
+    vocab = ", ".join(signs_ref.pretty(s) for s in signs_ref.speaker_vocabulary())
     if keys:
         n = len(keys)
         extra = ""
@@ -122,8 +122,8 @@ def render():
 
             st.markdown('<div class="sec" style="margin-top:.4rem">Or tap a word</div>', unsafe_allow_html=True)
             with st.container(key="quick_row"):
-                vocab = signs_ref.vocabulary()
-                per_row = 2
+                vocab = signs_ref.speaker_vocabulary()
+                per_row = 2 if len(vocab) <= 8 else 3
                 for i in range(0, len(vocab), per_row):
                     cols = st.columns(per_row)
                     for col, s in zip(cols, vocab[i:i + per_row]):

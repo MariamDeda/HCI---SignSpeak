@@ -18,7 +18,8 @@ from pathlib import Path
 
 import numpy as np
 
-DEFAULT_SIGNS = ["hello", "goodbye", "thank_you", "i_love_you", "yes", "no", "please", "sorry", "help"]
+DEFAULT_SIGNS = ["hello", "goodbye", "thank_you", "i_love_you", "yes", "no", "please", "sorry", "help",
+                 "mom", "dad", "water", "food", "drink", "hungry", "happy", "sad", "bad", "where"]
 # Our sign name -> other spellings used by the Kaggle dataset
 SYNONYMS = {"goodbye": ["bye", "goodbye"], "i_love_you": ["iloveyou", "loveyou"],
             "thank_you": ["thankyou", "thanks"]}

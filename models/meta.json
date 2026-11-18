@@ -6,13 +6,23 @@
     "i_love_you",
     "yes",
     "no",
+    "mom",
+    "dad",
+    "water",
+    "food",
+    "drink",
+    "hungry",
+    "happy",
+    "sad",
+    "bad",
+    "where",
     "unknown"
   ],
   "seq_len": 30,
   "feature_dim": 65,
   "split": "random stratified 80/20 (same signers in train and test - optimistic)",
-  "n_train": 2006,
-  "n_val": 34,
-  "n_test": 56,
-  "test_accuracy": 0.8392857142857143
+  "n_train": 4478,
+  "n_val": 316,
+  "n_test": 468,
+  "test_accuracy": 0.688034188034188
 }

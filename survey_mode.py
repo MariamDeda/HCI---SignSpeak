@@ -27,6 +27,8 @@ _JS = r"""<!doctype html><html><body><script>
     var start = +store.getItem('ss_start') || 0;
     if (sv && store.getItem('ss_sv') !== sv){ store.setItem('ss_sv', sv); store.setItem('ss_roles', ''); store.setItem('ss_start', ''); start = 0; }
     if (start && Date.now() - start > 3 * 3600 * 1000){ start = 0; store.setItem('ss_start', ''); }   // stale value from an old visit
+    // landing on the home page = a fresh visit: forget any earlier minute and any earlier view choice
+    if (!new URLSearchParams(location.search).get('page')){ start = 0; store.setItem('ss_start', ''); store.setItem('ss_roles', ''); }
     // the minute only starts once a view (Signer or Speaker) has been chosen
     var css = document.createElement('style');
     css.textContent = '#ss-sv{position:fixed;right:22px;bottom:22px;z-index:2147483000;font-family:"Open Sans","Segoe UI",system-ui,sans-serif;max-width:calc(100vw - 32px)}'

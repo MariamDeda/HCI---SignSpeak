@@ -3,8 +3,9 @@
   python train.py                       # random stratified 80/20 split by sequence
   python train.py --test-person mariam  # leave one signer out (recommended: no leakage)
   python train.py --test-person mariam --extra-data data_islr
-                                        # also learn from the Google ISLR clips (training only,
-                                        # never used for testing, so the test stays YOUR webcam data)
+                                        # also learn from the Google ISLR clips. For signs you did NOT record
+                                        # yourself, ~20% of the ISLR signers are held out (never trained on) so
+                                        # the report still measures accuracy on people the model has not seen.
 """
 import argparse
 import json
@@ -33,7 +34,9 @@ def main():
     ap.add_argument("--data-dir", default=str(config.DATA_DIR))
     ap.add_argument("--test-person", default=None)
     ap.add_argument("--epochs", type=int, default=60)
-    ap.add_argument("--extra-data", nargs="*", default=[], help="more data folders, used for TRAINING only")
+    ap.add_argument("--extra-data", nargs="*", default=[], help="more data folders (e.g. data_islr)")
+    ap.add_argument("--islr-holdout", type=float, default=0.2,
+                    help="share of extra-data signers kept out of training to test signs you have no recordings of")
     args = ap.parse_args()
 
     from pathlib import Path
@@ -56,9 +59,27 @@ def main():
         split = "random stratified 80/20 (same signers in train and test - optimistic)"
     Xtr, Xva, ytr, yva = train_test_split(Xtr, ytr, test_size=0.15, stratify=ytr, random_state=1)
     n_own = len(Xtr)
-    for folder in args.extra_data:                       # validation and test stay your own recordings
+    own_classes = np.unique(y)                           # classes you recorded yourself
+    hrng = np.random.default_rng(5)
+    for folder in args.extra_data:
         Xe, ye, pe = load_sequences(Path(folder))
         print(f"Extra data {folder}: {len(Xe)} sequences from {len(set(pe))} signers")
+        new_cls = ~np.isin(ye, own_classes)              # signs with no recording of yours
+        if new_cls.any() and args.islr_holdout > 0:
+            people = np.array(sorted(set(pe[new_cls])))
+            hrng.shuffle(people)
+            n_te = max(1, int(round(len(people) * args.islr_holdout)))
+            n_va = max(1, n_te // 2)
+            te_p, va_p = set(people[:n_te]), set(people[n_te:n_te + n_va])
+            m_te = new_cls & np.isin(pe, list(te_p))
+            m_va = new_cls & np.isin(pe, list(va_p))
+            Xte, yte = np.concatenate([Xte, Xe[m_te]]), np.concatenate([yte, ye[m_te]])
+            Xva, yva = np.concatenate([Xva, Xe[m_va]]), np.concatenate([yva, ye[m_va]])
+            keep = ~(m_te | m_va)
+            print(f"  held out {int(m_te.sum())} test + {int(m_va.sum())} validation clips from unseen signers "
+                  f"for signs without your own recordings: "
+                  f"{', '.join(config.SIGNS[c] for c in sorted(set(ye[new_cls])))}")
+            Xe, ye = Xe[keep], ye[keep]
         Xtr, ytr = np.concatenate([Xtr, Xe]), np.concatenate([ytr, ye])
 
     rng = np.random.default_rng(0)

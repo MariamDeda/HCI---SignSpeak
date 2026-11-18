@@ -63,6 +63,56 @@ SIGN_INFO = {
         "words": ["sorry", "apologies", "i am sorry", "i'm sorry"],
         "how": "Make a fist and rub it in a circle on your chest.",
     },
+    "mom": {
+        "emoji": "👩",
+        "words": ["mom", "mum", "mommy", "mummy", "mama", "mother", "mothers"],
+        "how": "Spread your fingers wide and tap your thumb on your chin, twice.",
+    },
+    "dad": {
+        "emoji": "👨",
+        "words": ["dad", "daddy", "papa", "father", "fathers"],
+        "how": "Spread your fingers wide and tap your thumb on your forehead, twice.",
+    },
+    "water": {
+        "emoji": "💧",
+        "words": ["water"],
+        "how": "Make a W: index, middle and ring fingers up, thumb touching the little finger. Tap your index finger on your chin, twice.",
+    },
+    "food": {
+        "emoji": "🍎",
+        "words": ["food", "eat", "eating", "meal", "lunch", "dinner", "breakfast", "snack"],
+        "how": "Bunch your fingertips together with your thumb, then tap them on your lips, twice.",
+    },
+    "drink": {
+        "emoji": "🥤",
+        "words": ["drink", "drinking", "drinks"],
+        "how": "Shape your hand as if holding a cup, then bring it to your mouth and tilt it as if drinking.",
+    },
+    "hungry": {
+        "emoji": "🍽️",
+        "words": ["hungry", "starving", "hunger"],
+        "how": "Make a C with your hand and place it at the top of your chest, then slide it down to your stomach.",
+    },
+    "happy": {
+        "emoji": "😊",
+        "words": ["happy", "glad", "joy", "joyful", "cheerful"],
+        "how": "Brush both flat hands up your chest in a circle, twice.",
+    },
+    "sad": {
+        "emoji": "😢",
+        "words": ["sad", "unhappy", "upset"],
+        "how": "Hold both open hands in front of your face, then drag them slowly down, with a sad face.",
+    },
+    "bad": {
+        "emoji": "👎",
+        "words": ["bad", "terrible", "awful"],
+        "how": "Touch your fingertips to your lips, then turn the hand over and move it down and away.",
+    },
+    "where": {
+        "emoji": "❓",
+        "words": ["where", "wheres", "where's"],
+        "how": "Hold up your index finger and shake it from side to side, with raised eyebrows.",
+    },
     "help": {
         "emoji": "🆘",
         "words": ["help", "help me"],
@@ -100,6 +150,16 @@ def vocabulary():
     return [s for s in all_signs() if s != config.UNKNOWN]
 
 
+def speaker_vocabulary():
+    """Signs the Speaker side can SHOW. The animation does not need the trained model, so every sign with a
+    written description and animation is available, plus anything the model knows."""
+    out = list(vocabulary())
+    for k in SIGN_INFO:
+        if k not in out:
+            out.append(k)
+    return out
+
+
 def info(key):
     base = SIGN_INFO.get(key, {})
     return {
@@ -111,7 +171,7 @@ def info(key):
 
 def _phrase_table():
     table = {}
-    for key in vocabulary():
+    for key in speaker_vocabulary():
         for w in info(key)["words"]:
             table.setdefault(w.lower(), key)
     return table
@@ -289,7 +349,11 @@ const SHAPES = {
   fist:{c:[1,1,1,1], th:-55, sp:0},
   thumbup:{c:[1,1,1,1], th:6, sp:0, tl:1.35},
   ily:{c:[0,1,1,0], th:75, sp:14},
-  two:{c:[0,0,1,1], th:45, sp:6}
+  two:{c:[0,0,1,1], th:45, sp:6},
+  W:{c:[0,0,0,1], th:-62, sp:15},
+  C:{c:[.42,.42,.42,.42], th:48, sp:4, tl:1.1},
+  bunch:{c:[.5,.5,.5,.5], th:-28, sp:0, tl:1.1},
+  point:{c:[0,1,1,1], th:-50, sp:0}
 };
 function h(x,y,r,shape,o){
   const S = SHAPES[shape], out = x < 200 ? -1 : 1, e = ik(out < 0 ? SH.R : SH.L, [x,y], out).E;
@@ -331,6 +395,39 @@ const SCRIPTS = {
     const o=h(128,236,18,'two',{c:[0,0,1,1],th:62,ex:104,ey:330}),
           c=h(128,236,18,'two',{c:[.55,.55,1,1],th:-15,tap:1,ex:104,ey:330});
     return ends([F(0),F(1.0,{R:o}),F(1.9,{R:o}),F(2.15,{R:c,hx:-3}),F(2.4,{R:c,hx:-3}),F(2.8,{R:o,hx:3}),F(3.05,{R:c,hx:-3}),F(3.3,{R:c,hx:-3}),F(3.7,{R:o,hx:3}),F(3.95,{R:c,hx:-3}),F(4.2,{R:c,hx:-3}),F(4.7,{R:o,hx:0}),F(5.2,{R:o})],6.0);})()},
+  mom:{mood:'smile', frames:(()=>{
+    const P=(x,y)=>h(x,y,-15,'open5',{ts:1,ex:128,ey:335}), T=P(167,190), A=P(158,205);
+    return ends([F(0),F(1.1,{R:A}),F(1.5,{R:T}),F(1.85,{R:A}),F(2.2,{R:T}),F(2.55,{R:A}),F(2.9,{R:T}),F(3.5,{R:T})],4.5);})()},
+  dad:{mood:'smile', frames:(()=>{
+    const P=(x,y)=>h(x,y,-15,'open5',{ts:1,ex:128,ey:300}), T=P(158,120), A=P(148,136);
+    return ends([F(0),F(1.2,{R:A}),F(1.6,{R:T}),F(1.95,{R:A}),F(2.3,{R:T}),F(2.65,{R:A}),F(3.0,{R:T}),F(3.6,{R:T})],4.6);})()},
+  water:{mood:'neutral', frames:(()=>{
+    const P=(x,y)=>h(x,y,25,'W',{ts:1,ex:118,ey:330}), T=P(142,221), A=P(132,234);
+    return ends([F(0),F(1.2,{R:A}),F(1.6,{R:T}),F(1.95,{R:A}),F(2.3,{R:T}),F(2.65,{R:A}),F(3.0,{R:T}),F(3.6,{R:T})],4.6);})()},
+  food:{mood:'smile', frames:(()=>{
+    const P=(x,y)=>h(x,y,20,'bunch',{ts:1,ex:128,ey:335}), T=P(180,182), A=P(168,198);
+    return ends([F(0),F(1.2,{R:A}),F(1.6,{R:T}),F(1.95,{R:A}),F(2.3,{R:T}),F(2.65,{R:A}),F(3.0,{R:T}),F(3.6,{R:T})],4.6);})()},
+  drink:{mood:'neutral', frames:(()=>{
+    const a=h(170,206,0,'C',{ts:1,ex:128,ey:335,s:1.0}), b=h(182,188,28,'C',{ts:1,ex:130,ey:335});
+    return ends([F(0),F(1.2,{R:a,st:0}),F(1.9,{R:a,st:0}),F(2.8,{R:b,st:1}),F(3.6,{R:b,st:1,hy:-2}),F(3.9,{R:a,st:1})],5.0);})()},
+  hungry:{mood:'neutral', frames:(()=>{
+    const a=h(166,200,80,'C',{ts:-1,ex:128,ey:330}), b=h(166,268,80,'C',{ts:-1,ex:128,ey:340});
+    return ends([F(0),F(1.2,{R:a,st:0}),F(1.9,{R:a,st:0}),F(3.1,{R:b,st:1}),F(3.7,{R:b,st:1,hy:2})],5.0);})()},
+  happy:{mood:'smile', frames:(()=>{
+    const R=(x,y)=>h(x,y,75,'flat',{ts:-1,ex:110,ey:335}), L=(x,y)=>h(400-x,y,-75,'flat',{ts:1,ex:290,ey:335});
+    const A=[154,256], B=[154,214], C=[138,232], fr=[F(0),F(1.0,{R:R(...A),L:L(...A),st:0})];
+    let t=1.3;
+    for(let k=0;k<3;k++){ fr.push(F(t,{R:R(...A),L:L(...A)})); fr.push(F(t+.5,{R:R(...B),L:L(...B)})); fr.push(F(t+.8,{R:R(...C),L:L(...C)})); t+=1.05; }
+    fr.push(F(t,{R:R(...A),L:L(...A)})); return ends(fr,t+.9);})()},
+  sad:{mood:'sad', frames:(()=>{
+    const R=(y)=>h(163,y,12,'open5',{ts:-1,ex:120,ey:330}), L=(y)=>h(237,y,-12,'open5',{ts:1,ex:280,ey:330});
+    return ends([F(0),F(1.2,{R:R(205),L:L(205),st:0}),F(2.0,{R:R(205),L:L(205),st:0}),F(3.6,{R:R(278),L:L(278),st:1,hy:5}),F(4.3,{R:R(278),L:L(278),st:1,hy:5})],5.4);})()},
+  bad:{mood:'sad', frames:(()=>{
+    const a=h(180,182,20,'flat',{ts:-1,ex:130,ey:330}), b=h(140,290,95,'flat',{ts:1,ex:105,ey:350});
+    return ends([F(0),F(1.2,{R:a,st:0}),F(1.9,{R:a,st:0}),F(3.1,{R:b,st:1}),F(3.7,{R:b,st:1})],4.8);})()},
+  where:{mood:'ask', frames:(()=>{
+    const r=a=>h(132,236,a,'point',{ts:1,ex:108,ey:335});
+    return ends([F(0),F(1.0,{R:r(0)}),F(1.4,{R:r(-16)}),F(1.8,{R:r(16)}),F(2.2,{R:r(-16)}),F(2.6,{R:r(16)}),F(3.0,{R:r(-16)}),F(3.4,{R:r(16)}),F(3.9,{R:r(0)})],4.8);})()},
   please:{mood:'smile', frames:(()=>{
     const s=circle('flat',150,230,15,72,{ts:-1,ex:110,ey:322},1.9,.24,2,0);
     return ends([F(0),F(1.0,{R:h(150,215,72,'flat',{ts:-1,ex:110,ey:322})}),F(1.6,{R:s[0].R})].concat(s.slice(1)).concat([F(4.2,{R:s[s.length-1].R})]),5.2);})()},
@@ -346,10 +443,12 @@ const SCRIPTS = {
 // camera: zoom in on the action while a sign is performed, zoom back out at rest
 const ARROWS = {   // a guide arrow drawn while the hand travels: [t from, t to, start, control, end]
   thank_you:[1.9,3.4,[206,150],[262,150],[268,228]],
+  hungry:[1.9,3.1,[212,205],[222,238],[212,272]],
+  bad:[1.9,3.1,[196,150],[150,170],[118,262]],
   hello:[1.9,3.2,[150,62],[110,40],[70,92]]
 };
 const CAMS = {hello:[135,140,1.7], goodbye:[150,185,1.6], thank_you:[160,215,1.5], i_love_you:[150,190,1.7],
-              yes:[170,220,1.7], no:[132,190,1.75], please:[170,215,1.7], sorry:[180,215,1.7], help:[230,260,1.55]};
+              yes:[170,220,1.7], mom:[165,170,1.6], dad:[155,115,1.5], water:[158,185,1.6], food:[180,175,1.7], drink:[178,190,1.6], hungry:[175,230,1.5], happy:[200,225,1.45], sad:[200,190,1.35], bad:[168,215,1.45], where:[130,205,1.7], no:[132,190,1.75], please:[170,215,1.7], sorry:[180,215,1.7], help:[230,260,1.55]};
 Object.keys(CAMS).forEach(k => { const c = CAMS[k], fr = SCRIPTS[k].frames;
   for (let i = 1; i < fr.length-1; i++) fr[i].cam = {x:c[0], y:c[1], z:c[2]}; });
 
@@ -511,7 +610,7 @@ function face(cx,cy,mood,blink){
   ctx.strokeStyle=HAIR; ctx.lineWidth=2.2;
   [-1,1].forEach(s=>{ ctx.beginPath();
     if (mood==='sad'){ ctx.moveTo(cx+s*21,cy-10); ctx.lineTo(cx+s*7,cy-16); }
-    else { ctx.moveTo(cx+s*21,cy-10); ctx.quadraticCurveTo(cx+s*13,cy-17,cx+s*6,cy-12); }
+    else { var u=(mood==='ask')?5:0; ctx.moveTo(cx+s*21,cy-10-u); ctx.quadraticCurveTo(cx+s*13,cy-17-u,cx+s*6,cy-12-u); }
     ctx.stroke(); });
   ctx.strokeStyle=SKIN_D; ctx.lineWidth=1.8; ctx.beginPath(); ctx.moveTo(cx,cy+8); ctx.quadraticCurveTo(cx+3.5,cy+15,cx-1,cy+16); ctx.stroke();
   // lips

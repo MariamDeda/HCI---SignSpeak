@@ -7,7 +7,9 @@ ROOT = Path(__file__).parent
 # ---- Vocabulary (ASL). Verify each sign against a reference (e.g. Handspeak,
 # ASL University) and perform it the SAME way every time. 'unknown' = idle hand,
 # random movement, anything that is not one of the signs.
-SIGNS = ["hello", "goodbye", "thank_you", "i_love_you", "yes", "no", "unknown"]
+SIGNS = ["hello", "goodbye", "thank_you", "i_love_you", "yes", "no",
+         "mom", "dad", "water", "food", "drink", "hungry", "happy", "sad", "bad", "where",
+         "unknown"]
 UNKNOWN = "unknown"
 DISPLAY = {"thank_you": "thank you", "i_love_you": "I love you"}
 

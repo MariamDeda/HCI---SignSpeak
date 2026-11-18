@@ -144,8 +144,9 @@ def main():
 
     z = np.load(args.raw, allow_pickle=False)
     lens, labels, pids, seqs = z["lens"], z["labels"], z["pids"], z["seqs"]
+    pts = z["pts"]                                       # read the big array ONCE (every z["pts"] re-reads the file)
     edges = np.concatenate([[0], np.cumsum(lens)])
-    clips = [z["pts"][edges[i]:edges[i + 1]] for i in range(len(lens))]
+    clips = [pts[edges[i]:edges[i + 1]] for i in range(len(lens))]
     rng = np.random.default_rng(args.seed)
 
     by_sign = {}
