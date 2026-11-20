@@ -21,8 +21,8 @@
   "seq_len": 30,
   "feature_dim": 65,
   "split": "random stratified 80/20 (same signers in train and test - optimistic)",
-  "n_train": 4478,
-  "n_val": 316,
-  "n_test": 468,
-  "test_accuracy": 0.688034188034188
+  "n_train": 5520,
+  "n_val": 354,
+  "n_test": 564,
+  "test_accuracy": 0.7641843971631206
 }
