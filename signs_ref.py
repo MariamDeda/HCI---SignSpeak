@@ -718,15 +718,17 @@ $('prev').onclick = () => show(idx-1);
 $('next').onclick = () => show(idx+1);
 $('slow').onclick = () => { si = (si+1) % SPEEDS.length; spd = SPEEDS[si][1]; $('slow').textContent = '🐢 Speed: ' + SPEEDS[si][0]; };
 let use3d = false;
-function load3d(){
-  const base = (location.origin && location.origin !== 'null' ? location.origin : '') + '/app/static/';
-  const sc = document.createElement('script'); sc.src = base + 'signer3d.js';
-  sc.onload = () => {
-    try { const gl = document.createElement('canvas').getContext('webgl2') || document.createElement('canvas').getContext('webgl');
-      if (!gl || !window.Signer3D) return;
-      Signer3D.init($('v3'), base + 'signer.vrm').then(() => { use3d = true; show(idx); }).catch(() => {}); } catch(e) {}
-  };
-  sc.onerror = () => {}; document.head.appendChild(sc);
+const BASES = ['https://mariamdeda.github.io/HCI---SignSpeak/', (location.origin && location.origin !== 'null' ? location.origin : '') + '/app/static/'];
+function loadScript(u){ return new Promise((ok,no)=>{ const e=document.createElement('script'); e.src=u; e.onload=ok; e.onerror=no; document.head.appendChild(e); }); }
+async function load3d(){
+  try { const c=document.createElement('canvas'); if(!(c.getContext('webgl2')||c.getContext('webgl'))) return; } catch(e){ return; }
+  for (const base of BASES){
+    try {
+      if (!window.Signer3D) await loadScript(base + 'signer3d.js');
+      await Signer3D.init($('v3'), base + 'signer.vrm');
+      use3d = true; show(idx); return;
+    } catch(e) { console.warn('3D avatar failed from', base, e); }
+  }
 }
 buildDots(); show(0); requestAnimationFrame(tick); load3d();
 </script></body></html>"""
