@@ -273,6 +273,7 @@ html,body{margin:0;background:transparent;color:var(--ink);font-family:"Open San
 .viz{position:relative;width:100%;aspect-ratio:10/11;max-height:430px;margin:auto;background:#fff;border-radius:12px;
   border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center}
 canvas{width:100%;height:100%;display:block}
+.v3{position:absolute;inset:0;background:linear-gradient(#F4FAFD,#E5F1F6)}
 .bigemoji{font-size:clamp(5.5rem,17vw,9.5rem);line-height:1;animation:float 2.6s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
 .hide{display:none!important}
@@ -310,7 +311,7 @@ button.c:disabled{opacity:.45;cursor:default}
 <div class="stage" data-run="__NONCE__">
   <div class="top"><span id="count"></span><span class="dots" id="dots"></span></div>
   <div class="main">
-    <div class="viz"><canvas id="cv" width="800" height="880"></canvas><div id="big" class="bigemoji hide"></div>
+    <div class="viz"><div id="v3" class="v3 hide"></div><canvas id="cv" width="800" height="880"></canvas><div id="big" class="bigemoji hide"></div>
       <div class="phase hide" id="phase"></div></div>
     <div class="info" id="info">
       <div class="label" id="label"></div>
@@ -674,7 +675,7 @@ function show(i){
   stepsOf(s.how).forEach(t => { const li = document.createElement('li'); li.textContent = t; $('how').appendChild(li); stepEls.push(li); });
   $('big').textContent = s.emoji;
   const has = !!sc;
-  cv.classList.toggle('hide', !has); $('big').classList.toggle('hide', has);
+  cv.classList.toggle('hide', !has || use3d); $('v3').classList.toggle('hide', !has || !use3d); $('big').classList.toggle('hide', has);
   $('scrubrow').classList.toggle('hide', !has); $('replay').classList.toggle('hide', !has);
   $('phase').classList.add('hide');
   $('cap').textContent = has ? '' : 'No animation for this sign yet. Follow the written steps.';
@@ -686,7 +687,7 @@ function show(i){
 }
 function render(t, sc){
   const pose = sample(sc.frames, t); pose.t = t;
-  drawSigner(pose, sc.mood, ARROWS[SEQ[idx].key]);
+  if (use3d) Signer3D.apply(pose, sc.mood); else drawSigner(pose, sc.mood, ARROWS[SEQ[idx].key]);
   const T = sc.frames[sc.frames.length-1].t;
   $('scrub').value = Math.round(t/T*1000); $('pct').textContent = Math.round(t/T*100) + '%';
   const k = Math.min(pose.st, stepEls.length-1);
@@ -716,7 +717,18 @@ $('play').onclick = () => { playing = !playing; $('play').textContent = playing 
 $('prev').onclick = () => show(idx-1);
 $('next').onclick = () => show(idx+1);
 $('slow').onclick = () => { si = (si+1) % SPEEDS.length; spd = SPEEDS[si][1]; $('slow').textContent = '🐢 Speed: ' + SPEEDS[si][0]; };
-buildDots(); show(0); requestAnimationFrame(tick);
+let use3d = false;
+function load3d(){
+  const base = (location.origin && location.origin !== 'null' ? location.origin : '') + '/app/static/';
+  const sc = document.createElement('script'); sc.src = base + 'signer3d.js';
+  sc.onload = () => {
+    try { const gl = document.createElement('canvas').getContext('webgl2') || document.createElement('canvas').getContext('webgl');
+      if (!gl || !window.Signer3D) return;
+      Signer3D.init($('v3'), base + 'signer.vrm').then(() => { use3d = true; show(idx); }).catch(() => {}); } catch(e) {}
+  };
+  sc.onerror = () => {}; document.head.appendChild(sc);
+}
+buildDots(); show(0); requestAnimationFrame(tick); load3d();
 </script></body></html>"""
 
 
