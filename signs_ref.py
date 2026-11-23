@@ -36,7 +36,7 @@ SIGN_INFO = {
     "thank_you": {
         "emoji": "🙏",
         "words": ["thank you", "thanks", "thank", "thankyou", "thanks a lot", "many thanks"],
-        "how": "Touch your fingertips to your chin, then move your flat hand forward.",
+        "how": "Touch your fingertips to your chin, then move your flat hand forward and down toward the other person.",
     },
     "i_love_you": {
         "emoji": "🤟",
@@ -358,7 +358,8 @@ const SHAPES = {
 };
 function h(x,y,r,shape,o){
   const S = SHAPES[shape], out = x < 200 ? -1 : 1, e = ik(out < 0 ? SH.R : SH.L, [x,y], out).E;
-  const q = Object.assign({x:x,y:y,r:r,s:1,w:1,fl:0,tap:0,ts:1,tl:S.tl||1,c:S.c.slice(),th:S.th,sp:S.sp,ex:e[0],ey:e[1]}, o||{});
+  const q = Object.assign({x:x,y:y,r:r,pz:0,pinch:0,s:1,w:1,fl:0,tap:0,ts:1,tl:S.tl||1,c:S.c.slice(),th:S.th,sp:S.sp,ex:e[0],ey:e[1]}, o||{});
+  ['x','y','ex','ey','w','r'].forEach(k => { if (q[k+'3'] === undefined) q[k+'3'] = q[k]; });   // optional separate coordinates for the 3D signer
   if (q.nl === undefined) q.nl = (out < 0 ? q.ts < 0 : q.ts > 0) ? 1 : 0;      // back of the hand showing?
   return q;
 }
@@ -383,30 +384,31 @@ const SCRIPTS = {
     return ends([F(0),F(1.1,{R:o}),F(1.7,{R:o}),F(2.05,{R:f}),F(2.4,{R:o}),F(2.75,{R:f}),F(3.1,{R:o}),F(3.45,{R:f}),F(3.8,{R:o}),F(4.2,{R:o})],5.1);})()},
   thank_you:{mood:'smile', frames:(()=>{
     // flat hand, palm towards the face, fingertips at the chin ... then out and down towards the other person
-    const a=h(164,240,18,'flat',{ts:-1,ex:132,ey:330}), b=h(150,255,55,'flat',{ts:-1,s:1.4,ex:122,ey:356});
+    const a=h(164,240,18,'flat',{ts:-1,ex:132,ey:330}), b=h(150,300,55,'flat',{ts:-1,s:1.4,ex:122,ey:356});
     return ends([F(0),F(1.1,{R:a,st:0,hy:2}),F(2.0,{R:a,st:0,hy:2}),F(3.2,{R:b,st:1}),F(4.0,{R:b,st:1})],5.0);})()},
   i_love_you:{mood:'smile', frames:(()=>{
     const r=a=>h(120,192,a,'ily',{ex:100,ey:292});
     return ends([F(0),F(1.1,{R:r(0)}),F(1.6,{R:r(0)}),F(2.0,{R:r(-10)}),F(2.4,{R:r(10)}),F(2.8,{R:r(-10)}),F(3.2,{R:r(10)}),F(3.6,{R:r(0)}),F(4.1,{R:r(0)})],5.0);})()},
   yes:{mood:'smile', frames:(()=>{
-    const r=a=>h(152,242,a,'fist',{ex:120,ey:330});
-    return ends([F(0),F(1.0,{R:r(0)}),F(1.4,{R:r(0)}),F(1.8,{R:r(38),hy:5}),F(2.2,{R:r(0)}),F(2.6,{R:r(38),hy:5}),F(3.0,{R:r(0)}),F(3.4,{R:r(38),hy:5}),F(3.8,{R:r(0)}),F(4.2,{R:r(0)})],5.0);})()},
+    // fist (thumb folded over the fingers) nods forward and back at the wrist, like a head nodding
+    const up=h(152,238,0,'fist',{ex:120,ey:326}), dn=h(152,252,16,'fist',{ex:120,ey:334,pz:0.9});
+    return ends([F(0),F(1.0,{R:up}),F(1.4,{R:up}),F(1.8,{R:dn,hy:5}),F(2.2,{R:up}),F(2.6,{R:dn,hy:5}),F(3.0,{R:up}),F(3.4,{R:dn,hy:5}),F(3.8,{R:up}),F(4.2,{R:up})],5.0);})()},
   no:{mood:'neutral', frames:(()=>{
     // front view: index + middle finger straight up, thumb out to the side; then the two fingers fold down and tap the thumb
     const o=h(128,236,18,'two',{c:[0,0,1,1],th:62,ex:104,ey:330}),
-          c=h(128,236,18,'two',{c:[.55,.55,1,1],th:-15,tap:1,ex:104,ey:330});
+          c=h(128,236,18,'two',{c:[.4,.4,1,1],th:-15,tap:1,pinch:1,ex:104,ey:330});
     return ends([F(0),F(1.0,{R:o}),F(1.9,{R:o}),F(2.15,{R:c,hx:-3}),F(2.4,{R:c,hx:-3}),F(2.8,{R:o,hx:3}),F(3.05,{R:c,hx:-3}),F(3.3,{R:c,hx:-3}),F(3.7,{R:o,hx:3}),F(3.95,{R:c,hx:-3}),F(4.2,{R:c,hx:-3}),F(4.7,{R:o,hx:0}),F(5.2,{R:o})],6.0);})()},
   mom:{mood:'smile', frames:(()=>{
-    const P=(x,y)=>h(x,y,-15,'open5',{ts:1,ex:128,ey:335}), T=P(167,190), A=P(158,205);
+    const P=(x,y,x3,y3)=>h(x,y,-15,'open5',{ts:1,ex:128,ey:335,x3:x3,y3:y3,w3:.35}), T=P(167,190,191,202), A=P(158,205,182,217);
     return ends([F(0),F(1.1,{R:A}),F(1.5,{R:T}),F(1.85,{R:A}),F(2.2,{R:T}),F(2.55,{R:A}),F(2.9,{R:T}),F(3.5,{R:T})],4.5);})()},
   dad:{mood:'smile', frames:(()=>{
-    const P=(x,y)=>h(x,y,-15,'open5',{ts:1,ex:128,ey:300}), T=P(158,120), A=P(148,136);
+    const P=(x,y,x3,y3)=>h(x,y,-15,'open5',{ts:1,ex:128,ey:300,x3:x3,y3:y3,w3:.35,r3:45,ex3:80,ey3:130}), T=P(158,120,160,99), A=P(148,136,150,115);
     return ends([F(0),F(1.2,{R:A}),F(1.6,{R:T}),F(1.95,{R:A}),F(2.3,{R:T}),F(2.65,{R:A}),F(3.0,{R:T}),F(3.6,{R:T})],4.6);})()},
   water:{mood:'neutral', frames:(()=>{
-    const P=(x,y)=>h(x,y,25,'W',{ts:1,ex:118,ey:330}), T=P(142,221), A=P(132,234);
+    const P=(x,y,x3,y3)=>h(x,y,25,'W',{ts:1,ex:118,ey:330,x3:x3,y3:y3}), T=P(142,221,159,203), A=P(132,234,149,216);
     return ends([F(0),F(1.2,{R:A}),F(1.6,{R:T}),F(1.95,{R:A}),F(2.3,{R:T}),F(2.65,{R:A}),F(3.0,{R:T}),F(3.6,{R:T})],4.6);})()},
   food:{mood:'smile', frames:(()=>{
-    const P=(x,y)=>h(x,y,20,'bunch',{ts:1,ex:128,ey:335}), T=P(180,182), A=P(168,198);
+    const P=(x,y,x3,y3)=>h(x,y,25,'bunch',{ts:1,nl:1,pinch:1,c:[.38,.38,.38,.38],ex:128,ey:335,x3:x3,y3:y3}), T=P(180,182,187,199), A=P(168,198,175,215);
     return ends([F(0),F(1.2,{R:A}),F(1.6,{R:T}),F(1.95,{R:A}),F(2.3,{R:T}),F(2.65,{R:A}),F(3.0,{R:T}),F(3.6,{R:T})],4.6);})()},
   drink:{mood:'neutral', frames:(()=>{
     const a=h(170,206,0,'C',{ts:1,ex:128,ey:335,s:1.0}), b=h(182,188,28,'C',{ts:1,ex:130,ey:335});
@@ -724,9 +726,9 @@ async function load3d(){
   try { const c=document.createElement('canvas'); if(!(c.getContext('webgl2')||c.getContext('webgl'))) return; } catch(e){ return; }
   for (const base of BASES){
     try {
-      if (!window.Signer3D) await loadScript(base + 'signer3d.js');
-      await Signer3D.init($('v3'), base + 'signer.vrm');
-      use3d = true; show(idx); return;
+      if (!window.Signer3D) await loadScript(base + 'signer3d_v9.js');
+      await Signer3D.init($('v3'), base + 'signer.vrm?v=4');
+      use3d = true; show(idx); const bd=document.createElement('div'); bd.textContent='3D v9'; bd.style.cssText='position:absolute;left:8px;bottom:6px;font:600 10px sans-serif;color:#5F7080;opacity:.7'; $('v3').appendChild(bd); return;
     } catch(e) { console.warn('3D avatar failed from', base, e); }
   }
 }
