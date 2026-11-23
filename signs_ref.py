@@ -36,7 +36,7 @@ SIGN_INFO = {
     "thank_you": {
         "emoji": "🙏",
         "words": ["thank you", "thanks", "thank", "thankyou", "thanks a lot", "many thanks"],
-        "how": "Touch your fingertips to your chin, then move your flat hand forward and down toward the other person.",
+        "how": "Touch your fingertips to your chin, then move your flat hand forward.",
     },
     "i_love_you": {
         "emoji": "🤟",
@@ -383,7 +383,7 @@ const SCRIPTS = {
     return ends([F(0),F(1.1,{R:o}),F(1.7,{R:o}),F(2.05,{R:f}),F(2.4,{R:o}),F(2.75,{R:f}),F(3.1,{R:o}),F(3.45,{R:f}),F(3.8,{R:o}),F(4.2,{R:o})],5.1);})()},
   thank_you:{mood:'smile', frames:(()=>{
     // flat hand, palm towards the face, fingertips at the chin ... then out and down towards the other person
-    const a=h(164,240,18,'flat',{ts:-1,ex:132,ey:330}), b=h(150,300,55,'flat',{ts:1,s:1.4,ex:122,ey:356});
+    const a=h(164,240,18,'flat',{ts:-1,ex:132,ey:330}), b=h(150,255,55,'flat',{ts:-1,s:1.4,ex:122,ey:356});
     return ends([F(0),F(1.1,{R:a,st:0,hy:2}),F(2.0,{R:a,st:0,hy:2}),F(3.2,{R:b,st:1}),F(4.0,{R:b,st:1})],5.0);})()},
   i_love_you:{mood:'smile', frames:(()=>{
     const r=a=>h(120,192,a,'ily',{ex:100,ey:292});
